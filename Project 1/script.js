@@ -2,7 +2,10 @@ const addButton = document.querySelector('#addButton');
 const deleteButton = document.querySelector('#deleteButton');
 const calculateButton = document.querySelector('#calculateButton');
 const numberInputs = document.querySelector('#numberInputs');
-const result = document.querySelector('#result');
+const sumResult = document.querySelector('#sumResult');
+const avgResult = document.querySelector('#avgResult');
+const minResult = document.querySelector('#minResult');
+const maxResult = document.querySelector('#maxResult');
 
 addButton.addEventListener('click', () => {
     let newInput = document.createElement('input');
@@ -15,16 +18,22 @@ numberInputs.addEventListener('change', () => {
     let sum = 0;
     let sumHelper;
     const numbers = document.querySelectorAll('.number');
-    console.log(numbers);
-    numbers.forEach(element => {
+    const mappednumbers = Array.from(numbers).map(element => element.value);
+    let min = Math.min(...mappednumbers);
+    let max = Math.max(...mappednumbers);
+
+    mappednumbers.forEach(element => {
         sumHelper = sum;
-        sum += parseInt(element.value);
+        sum += parseInt(element);
         
         if(isNaN(sum)) {
             sum = sumHelper;
         } 
     })
-    result.textContent = `Wynik to ${sum}`;
+    sumResult.textContent = `Suma to ${sum}`;
+    avgResult.textContent = `Średnia to ${sum / mappednumbers.length}`;
+    maxResult.textContent = `Najwyższa liczba to ${max}`;
+    minResult.textContent = `Najniższa liczba to ${min}`;
 })
 
 deleteButton.addEventListener('click', () => {
