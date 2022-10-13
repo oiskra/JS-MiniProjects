@@ -10,7 +10,7 @@
 
 #slider .slides {
     animation-name: carousel;
-    animation-duration: 4s;
+    animation-duration: 2s;
     animation-delay: 1s;
     animation-timing-function: ease-in-out; 
     
@@ -36,11 +36,28 @@
     cursor: pointer;
 }
 
+#prevBtn, #nextBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 180px;
+}
+
+#prevBtn {
+    left: 10px;
+}
+
+#nextBtn {
+    right: 10px;
+}
+
 @keyframes carousel {
     from {
         transform: translateX(0px);
     }
     to {
-       transform:translateX(-3000px);
+       transform:translateX(-600px);
     }
 }
