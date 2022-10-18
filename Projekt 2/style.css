@@ -6,20 +6,17 @@
     position: relative;
 }
 
-
-
 #slider .slides {
-    animation-name: carousel;
+    /* animation-name: carousel;
     animation-duration: 2s;
     animation-delay: 1s;
-    animation-timing-function: ease-in-out; 
-    
+    animation-timing-function: ease-in-out;  */
     display: flex; 
 }
 
 .active {
     background-color: blue !important;
-}
+} 
 
 #slide-tracker {
     display: flex;
@@ -36,28 +33,26 @@
     cursor: pointer;
 }
 
-#prevBtn, #nextBtn {
+#prev-btn, #next-btn {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
     top: 180px;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#prevBtn {
+#prev-btn {
     left: 10px;
 }
 
-#nextBtn {
+#next-btn {
     right: 10px;
 }
 
-@keyframes carousel {
-    from {
-        transform: translateX(0px);
-    }
-    to {
-       transform:translateX(-600px);
-    }
-}
+
