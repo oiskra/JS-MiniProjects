@@ -35,6 +35,12 @@ const toggleDots = () => {
     if(dotCounter === dots.length) {dotCounter = 0;}
     dots[dotCounter].classList.toggle("active");
 }
+const toggleDotsReverse = () => {
+    dots[dotCounter].classList.toggle("active");
+    dotCounter--;
+    if(dotCounter === 0) {dotCounter = dots.length;}
+    dots[dotCounter].classList.toggle("active");
+}
 
 const sliderAnimation = () => {
     animationInterval = setInterval(() => {
@@ -72,26 +78,29 @@ slides.addEventListener('mouseout', () => {
 })
 
 prevButton.addEventListener('click', () => { 
+    console.log('dot:', dotCounter)
     if(currentTranslate >= startingTranslate) {
-        slides.style.transform = `translateX(${endingTranslate}px)`;
-        currentTranslate = endingTranslate;
+        slides.style.transform = `translateX(${-3000}px)`;
+        currentTranslate = -3000;
     } else {
         slides.style.transform = `translateX(${currentTranslate + 600}px)`;
         animation.cancel();
         clearInterval(animationInterval);
+        toggleDotsReverse();
         currentTranslate += 600;
     }
 })
 
 nextButton.addEventListener('click', () => { 
     console.log(currentTranslate)
-    if(currentTranslate <= endingTranslate) {
+    if(currentTranslate <= -3000) {
         slides.style.transform = `translateX(${startingTranslate}px)`;
         currentTranslate = startingTranslate;        
     } else{
         slides.style.transform = `translateX(${currentTranslate - 600}px)`;
         animation.cancel();
         clearInterval(animationInterval);
+        toggleDots();
         currentTranslate -= 600;
     }
 })
