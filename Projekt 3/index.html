@@ -4,17 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./style.css" type="text/css">
 </head>
 <body>
-    <audio src="./sounds/boom.wav" controls id="boom"></audio>
-    <audio src="./sounds/clap.wav" controls id="clap"></audio>
-    <audio src="./sounds/hihat.wav" controls id="hihat"></audio>
-    <audio src="./sounds/kick.wav" controls id="kick"></audio>
-    <audio src="./sounds/openhat.wav" controls id="openhat"></audio>
-    <audio src="./sounds/ride.wav" controls id="ride"></audio>
-    <audio src="./sounds/snare.wav" controls id="snare"></audio>
-    <audio src="./sounds/tink.wav" controls id="tink"></audio>
-    <audio src="./sounds/tom.wav" controls id="tom"></audio>
+    
+    <audio src="./sounds/boom.wav" id="boom"></audio>
+    <audio src="./sounds/clap.wav" id="clap"></audio>
+    <audio src="./sounds/hihat.wav" id="hihat"></audio>
+    <audio src="./sounds/kick.wav" id="kick"></audio>
+    <audio src="./sounds/openhat.wav" id="openhat"></audio>
+    <audio src="./sounds/ride.wav" id="ride"></audio>
+    <audio src="./sounds/snare.wav" id="snare"></audio>
+    <audio src="./sounds/tink.wav" id="tink"></audio>
+    <audio src="./sounds/tom.wav" id="tom"></audio>
+
+    <div class="sound-board">
+        <div id="sound-btn-boom" class="sound-btn"></div>
+        <div id="sound-btn-clap" class="sound-btn"></div>
+        <div id="sound-btn-hihat" class="sound-btn"></div>
+        <div id="sound-btn-kick" class="sound-btn"></div>
+        <div id="sound-btn-openhat" class="sound-btn"></div>
+        <div id="sound-btn-ride" class="sound-btn"></div>
+        <div id="sound-btn-snare" class="sound-btn"></div>
+        <div id="sound-btn-tink" class="sound-btn"></div>
+        <div id="sound-btn-tom" class="sound-btn"></div>
+    </div>
+
+    <div class="path-manager">
+        <div class="buttons-bar">
+            <div class="record-btn">REC</div>
+            <div onclick="playRecordedPath()" class="play-btn">PLAY</div>
+            <div class="stop-btn">STOP</div>
+            <div class="play-all-btn">PLAY ALL</div>
+            <div class="loop-btn">LOOP</div>
+        </div>
+        <div class="all-paths">
+            <div class="path">
+
+            </div>
+        </div>
+        
+    </div>
+
     <script src="drumkit.js"></script>
 </body> 
 </html>

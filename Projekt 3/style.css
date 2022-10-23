@@ -1,0 +1,84 @@
+body {
+    width: 98vw;
+    height: 90vh;
+    background-color: rgb(27, 25, 25);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sound-board {
+    margin: 50px auto;
+    display: flex;
+    flex-wrap: wrap;
+    width: 800px;
+    height: fit-content;
+}
+
+
+.sound-btn {
+    width: 250px;
+    height: 150px;
+    margin: 5px;
+    background-color: rgb(93, 104, 255);
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 15px rgb(215, 208, 255);
+}
+
+.pressed {
+    background-color: blue !important;
+}
+
+.path-manager {
+    margin: 0 auto;
+    width: 800px;
+    height: fit-content;
+}
+
+
+.buttons-bar {
+    width: inherit;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.record-btn, .loop-btn, .play-btn, .play-all-btn, .stop-btn{
+    width: 95px;
+    height: 35px;
+    border-radius: 10px;
+    background-color: rgb(27, 25, 25);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.stop-btn {
+    border: solid 5px orangered;
+}
+
+.record-btn {
+    border: solid 5px red;
+}
+
+.play-btn, .play-all-btn {
+    border: solid 5px rgb(24, 179, 24);
+}
+
+.loop-btn {
+    border: solid 5px rgb(71, 71, 252);
+}
+
+.path {
+    background-color: chocolate;
+    margin: 0 auto;
+    margin-top: 50px;
+    height: 50px;
+    width: 500px;
+}
+
+.selected-path {
+
+}
+
+
+
