@@ -1,5 +1,6 @@
-const START_RECORDING_KEY = '0'
-const CHANNEL_TIME_LIMIT = 15
+const addBtn = document.querySelector('#add-path-btn')
+const CHANNEL_TIME_LIMIT = 10
+const TRACKS = []
 const CHANNEL_1 = []
 const SOUNDS = {
     1: 'boom',
@@ -66,6 +67,13 @@ const toggleColorOnClick = sound => {
     soundBtn.classList.toggle('pressed')
     setTimeout(() => soundBtn.classList.toggle('pressed'), 100)
 }
+
+const playSound = sound => {
+    const audioTag = document.querySelector(`#${sound}`)
+    audioTag.currentTime = 0 
+    audioTag.play()
+}
+
 const startRecording = () => {
     document.addEventListener('keypress', event => {
         const key = event.key
@@ -77,7 +85,6 @@ const startRecording = () => {
         console.log(CHANNEL_1)
     })
 }
-startRecording()
 
 const playRecordedPath = () => {
     if(CHANNEL_1.length === 0) return
@@ -98,13 +105,27 @@ const playRecordedPath = () => {
     }, timeout)
 }
 
-const playSound = sound => {
-    const audioTag = document.querySelector(`#${sound}`)
-    audioTag.currentTime = 0 
-    audioTag.play()
+
+
+const createSelectivePaths = () => {
+    const paths = Array.from(document.querySelectorAll('.path'))
+    paths.forEach(el => {
+        el.addEventListener('click', () => {
+            let isSelected = el.classList.contains('selected-path')
+            if(isSelected)
+                el.classList.remove('selected-path')
+            else 
+                el.classList.add('selected-path')
+        })
+    })
 }
+createSelectivePaths();
 
 const createNewPath = () => {
-
+    const allPaths = document.querySelector('.all-paths')
+    const newPath = document.createElement('div');
+    newPath.classList.add('path')
+    allPaths.appendChild(newPath)   
 }
+addBtn.addEventListener('click', createNewPath)
 

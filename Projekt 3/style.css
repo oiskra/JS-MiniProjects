@@ -9,6 +9,7 @@ body {
     margin: 50px auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content:  center;
     width: 800px;
     height: fit-content;
 }
@@ -28,9 +29,11 @@ body {
 }
 
 .path-manager {
-    margin: 0 auto;
+    margin: 20px auto;
     width: 800px;
     height: fit-content;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -69,15 +72,28 @@ body {
 }
 
 .path {
-    background-color: chocolate;
-    margin: 0 auto;
-    margin-top: 50px;
+    background-color: rgb(27, 25, 25);
+    border: solid 5px rgb(93, 104, 255);
+    border-radius: 10px;
+    margin: 20px auto;
     height: 50px;
     width: 500px;
+    cursor: pointer;
 }
 
 .selected-path {
+  background-color: rgb(40, 40, 40) !important;
+}
 
+#add-path-btn {
+    margin: 20px auto;
+    background-color: rgb(27, 25, 25);
+    border: solid 5px white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
 }
 
 
