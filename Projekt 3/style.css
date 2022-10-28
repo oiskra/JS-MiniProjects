@@ -85,8 +85,8 @@ body {
   background-color: rgb(40, 40, 40) !important;
 }
 
-#add-path-btn {
-    margin: 20px auto;
+#add-path-btn, #delete-path-btn {
+    margin: 10px auto;
     background-color: rgb(27, 25, 25);
     border: solid 5px white;
     border-radius: 10px;
