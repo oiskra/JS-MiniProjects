@@ -2,12 +2,15 @@
 
 const recBtn = document.querySelector('.record-btn')
 const playBtn = document.querySelector('.play-btn')
+const loopBtn = document.querySelector('.loop-btn')
 const deleteBtn = document.querySelector('#delete-path-btn')
 const addBtn = document.querySelector('#add-path-btn')
 const metronome = document.querySelector('#metronome')
 
 let METRONOME_INTERVAL
 let METRONOME_ON = false
+let LOOP_ACTIVE = false
+let LOOP_INTERVAL
 const RECORDING_TIME_LIMIT = 5
 let PATH_TRACKER = 4;
 const TRACKS = [[],[],[],[]]
@@ -25,8 +28,6 @@ const SOUNDS = {
 
 const onKeyPress = event => {
     const key = event.key
-    console.log(key)
-
     switch(key) {
         case 'q':
             toggleColorOnClick('boom')
@@ -93,8 +94,9 @@ const startRecording = () => {
 
 const addSoundToTrack = (event) => {
     const selectedPaths = returnSelectedPathIds()
-
     const key = event.key
+
+    if(!Object.keys(SOUNDS).includes(key)) return
     const record = {
         sound: SOUNDS[key],
         timestamp: Date.now()
@@ -129,7 +131,6 @@ const playRecordedPath = (ids) => {
                 timeout = 0
             
             playSound(TRACKS[id][counter].sound)
-            console.log(TRACKS[id][counter].sound)
             counter = ++counter
 
             clearTimeout(setTimeoutId)
@@ -139,10 +140,7 @@ const playRecordedPath = (ids) => {
         setTimeoutId = setTimeout(playSingleSound, 0)
     })  
 }
-playBtn.addEventListener('click', () => {
-    const ids = returnSelectedPathIds()
-    playRecordedPath(ids)
-})
+
 
 const returnSelectedPathIds = () => {
     const paths = Array.from(document.querySelectorAll('.path'))
@@ -194,7 +192,10 @@ const deletePath = () => {
 
 const animateMetronome = () => {
     const bmp = document.querySelector('#bpm')
-
+    if(!bmp.value) {
+        alert('set BMP')
+        return
+    }
     const msPerBeat = (60000 / bmp.value)
 
     if(!METRONOME_ON){
@@ -213,12 +214,29 @@ const animateMetronome = () => {
     }
 }
 
+const loopPath = () => {
+    if(LOOP_ACTIVE){
+        clearInterval(LOOP_INTERVAL)
+        LOOP_ACTIVE = false
+        return
+    }
+    
+    loopBtn.classList.toggle('active')    
+    LOOP_INTERVAL = setInterval(()=>playRecordedPath(returnSelectedPathIds()), RECORDING_TIME_LIMIT*1000)
+    LOOP_ACTIVE = true
+}
+
 createSelectivePaths();
 
+loopBtn.addEventListener('click', loopPath)
 metronome.addEventListener('click', animateMetronome)
 recBtn.addEventListener('click', startRecording)
 addBtn.addEventListener('click', createNewPath)
 deleteBtn.addEventListener('click', deletePath)
+playBtn.addEventListener('click', () => {
+    const ids = returnSelectedPathIds()
+    playRecordedPath(ids)
+})
 document.addEventListener('keypress', onKeyPress)
 
 
