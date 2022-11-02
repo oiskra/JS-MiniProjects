@@ -4,22 +4,23 @@ const recBtn = document.querySelector('.record-btn')
 const playBtn = document.querySelector('.play-btn')
 const deleteBtn = document.querySelector('#delete-path-btn')
 const addBtn = document.querySelector('#add-path-btn')
+const metronome = document.querySelector('#metronome')
 
-let IS_RECORDING = false
+let METRONOME_INTERVAL
+let METRONOME_ON = false
 const RECORDING_TIME_LIMIT = 5
 let PATH_TRACKER = 4;
 const TRACKS = [[],[],[],[]]
-const CHANNEL_1 = []
 const SOUNDS = {
-    1: 'boom',
-    2: 'clap',
-    3: 'hihat',
-    4: 'kick',
-    5: 'openhat',
-    6: 'ride',
-    7: 'snare',
-    8: 'tink',
-    9: 'tok'
+    q: 'boom',
+    w: 'clap',
+    e: 'hihat',
+    r: 'kick',
+    t: 'openhat',
+    y: 'ride',
+    u: 'snare',
+    i: 'tink',
+    o: 'tok'
 }
 
 const onKeyPress = event => {
@@ -27,41 +28,39 @@ const onKeyPress = event => {
     console.log(key)
 
     switch(key) {
-        case '0':
-            startRecording()
-        case '1':
+        case 'q':
             toggleColorOnClick('boom')
             playSound('boom')
             break
-        case '2':
+        case 'w':
             toggleColorOnClick('clap')
             playSound('clap')
             break
-        case '3':
+        case 'e':
             toggleColorOnClick('hihat')
             playSound('hihat')
             break
-        case '4':
+        case 'r':
             toggleColorOnClick('kick')
             playSound('kick')
             break
-        case '5':
+        case 't':
             toggleColorOnClick('openhat')
             playSound('openhat')
             break
-        case '6':
+        case 'y':
             toggleColorOnClick('ride')
             playSound('ride')
             break
-        case '7':
+        case 'u':
             toggleColorOnClick('snare')
             playSound('snare')
             break
-        case '8':
+        case 'i':
             toggleColorOnClick('tink')
             playSound('tink')
             break
-        case '9':
+        case 'o':
             toggleColorOnClick('tom')
             playSound('tom')
             break
@@ -82,7 +81,6 @@ const playSound = sound => {
 }
 
 const startRecording = () => {
-    IS_RECORDING = true
     const selectedPaths = returnSelectedPathIds()
     if(selectedPaths.length !== 1) {
         alert('You must have one track selected to record.')
@@ -90,17 +88,7 @@ const startRecording = () => {
     }
     setTimeout(stopRecording, RECORDING_TIME_LIMIT*1000)
 
-    // document.addEventListener('keypress', event => {
-    //     const key = event.key
-    //     const record = {
-    //         sound: SOUNDS[key],
-    //         timestamp: Date.now()
-    //     }
-    //     TRACKS[selectedPaths[0]].push(record)
-    //     console.log(TRACKS)
-    // })
-
-    document.addEventListener('keypress', test)
+    document.addEventListener('keypress', addSoundToTrack)
 }
 
 const addSoundToTrack = (event) => {
@@ -111,16 +99,14 @@ const addSoundToTrack = (event) => {
         sound: SOUNDS[key],
         timestamp: Date.now()
     }
+
     TRACKS[selectedPaths[0]].push(record)
     console.log(TRACKS)
 }
 
 
 const stopRecording = () => {
-    IS_RECORDING = false
-    console.log('is recording', IS_RECORDING)
     document.removeEventListener('keypress', addSoundToTrack)
-
 }
 
 const playRecordedPath = (ids) => {
@@ -171,11 +157,7 @@ const createSelectivePaths = () => {
     const paths = Array.from(document.querySelectorAll('.path'))
     paths.forEach(el => {
         el.addEventListener('click', () => {
-            let isSelected = el.classList.contains('selected-path')
-            if(isSelected)
-                el.classList.remove('selected-path')
-            else 
-                el.classList.add('selected-path')
+            el.classList.toggle('selected-path')
         })
     })
 }
@@ -203,17 +185,37 @@ const createNewPath = () => {
 const deletePath = () => {   
     const paths = Array.from(document.querySelectorAll('.path'))
     const path = paths.find(el => el.classList.contains('selected-path'))
-    const pathID = path.id.split('-')[1]
+    if(!path) return;
 
-    if(!path)
-        return;
-    
+    const pathID = path.id.split('-')[1]
     TRACKS.splice(pathID, 1)
     path.remove()
 }
 
+const animateMetronome = () => {
+    const bmp = document.querySelector('#bpm')
+
+    const msPerBeat = (60000 / bmp.value)
+
+    if(!METRONOME_ON){
+        METRONOME_INTERVAL = setInterval(() => {
+            playSound('tink')
+            metronome.animate([
+                {transform: 'scale(1)'},
+                {transform: 'scale(1.2)'}
+            ], msPerBeat)
+        }, msPerBeat)       
+        METRONOME_ON = true
+    } 
+    else {
+        clearInterval(METRONOME_INTERVAL)
+        METRONOME_ON = false
+    }
+}
+
 createSelectivePaths();
 
+metronome.addEventListener('click', animateMetronome)
 recBtn.addEventListener('click', startRecording)
 addBtn.addEventListener('click', createNewPath)
 deleteBtn.addEventListener('click', deletePath)

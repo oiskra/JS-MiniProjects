@@ -17,35 +17,40 @@
     <audio src="./sounds/snare.wav" id="snare"></audio>
     <audio src="./sounds/tink.wav" id="tink"></audio>
     <audio src="./sounds/tom.wav" id="tom"></audio>
-
-    <div class="sound-board">
-        <div id="sound-btn-boom" class="sound-btn"></div>
-        <div id="sound-btn-clap" class="sound-btn"></div>
-        <div id="sound-btn-hihat" class="sound-btn"></div>
-        <div id="sound-btn-kick" class="sound-btn"></div>
-        <div id="sound-btn-openhat" class="sound-btn"></div>
-        <div id="sound-btn-ride" class="sound-btn"></div>
-        <div id="sound-btn-snare" class="sound-btn"></div>
-        <div id="sound-btn-tink" class="sound-btn"></div>
-        <div id="sound-btn-tom" class="sound-btn"></div>
-    </div>
-
-    <div class="path-manager">
-        <div class="buttons-bar">
-            <div class="record-btn">REC</div>
-            <div class="play-btn">PLAY</div>
-            <div class="stop-btn">STOP</div>
-            <div class="play-all-btn">PLAY ALL</div>
-            <div class="loop-btn">LOOP</div>
+    
+    <div class="wrapper">
+        <div class="metronome-container">
+            <div id="metronome"></div>
+            <input id="bpm" type="text" placeholder="BPM">
         </div>
-        <div class="all-paths">
-            <div id="path-0" class="path"></div>
-            <div id="path-1" class="path"></div>
-            <div id="path-2" class="path"></div>
-            <div id="path-3" class="path"></div>
+        <div class="sound-board">
+            <div id="sound-btn-boom" class="sound-btn"></div>
+            <div id="sound-btn-clap" class="sound-btn"></div>
+            <div id="sound-btn-hihat" class="sound-btn"></div>
+            <div id="sound-btn-kick" class="sound-btn"></div>
+            <div id="sound-btn-openhat" class="sound-btn"></div>
+            <div id="sound-btn-ride" class="sound-btn"></div>
+            <div id="sound-btn-snare" class="sound-btn"></div>
+            <div id="sound-btn-tink" class="sound-btn"></div>
+            <div id="sound-btn-tom" class="sound-btn"></div>
         </div>
-        <button id="add-path-btn">ADD PATH</button>
-        <button id="delete-path-btn">DELETE PATH</button>
+        <div class="path-manager">
+            <div class="buttons-bar">
+                <div class="record-btn">REC</div>
+                <div class="play-btn">PLAY</div>
+                <div class="stop-btn">STOP</div>
+                <div class="play-all-btn">PLAY ALL</div>
+                <div class="loop-btn">LOOP</div>
+            </div>
+            <div class="all-paths">
+                <div id="path-0" class="path"></div>
+                <div id="path-1" class="path"></div>
+                <div id="path-2" class="path"></div>
+                <div id="path-3" class="path"></div>
+            </div>
+            <button id="add-path-btn">ADD PATH</button>
+            <button id="delete-path-btn">DELETE PATH</button>
+        </div>
     </div>
 
     <script src="drumkit.js"></script>
