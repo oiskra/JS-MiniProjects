@@ -87,13 +87,10 @@ const startRecording = () => {
         alert('You must have one track selected to record.')
         return
     }
+
+    recBtn.classList.toggle('active')
     setTimeout(stopRecording, RECORDING_TIME_LIMIT*1000)
-    animateRecordedPath(selectedPaths[0])
     document.addEventListener('keypress', addSoundToTrack)
-}
-
-const animateRecordedPath = (pathId) => {
-
 }
 
 const addSoundToTrack = (event) => {
@@ -111,6 +108,7 @@ const addSoundToTrack = (event) => {
 }
 
 const stopRecording = () => {
+    recBtn.classList.toggle('active')
     document.removeEventListener('keypress', addSoundToTrack)
 }
 
@@ -219,6 +217,7 @@ const animateMetronome = () => {
 
 const loopPath = () => {
     if(LOOP_ACTIVE){
+        loopBtn.classList.toggle('active')
         clearInterval(LOOP_INTERVAL)
         LOOP_ACTIVE = false
         return

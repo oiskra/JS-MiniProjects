@@ -127,6 +127,11 @@ body {
     height: 30px;
 }
 
+.active {
+    transform: scale(1.1) !important;
+    background-color: rgb(40, 40, 40) !important;
+}
+
 
 
 

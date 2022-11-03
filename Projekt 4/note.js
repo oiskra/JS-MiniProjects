@@ -13,5 +13,9 @@ export default class Note {
         this.createdAt = new Date()
     }
 
+    addNote(timestamp) {
+        localStorage.setItem(timestamp, this)
+    }
+
 }
 
