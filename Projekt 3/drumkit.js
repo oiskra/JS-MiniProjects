@@ -88,8 +88,12 @@ const startRecording = () => {
         return
     }
     setTimeout(stopRecording, RECORDING_TIME_LIMIT*1000)
-
+    animateRecordedPath(selectedPaths[0])
     document.addEventListener('keypress', addSoundToTrack)
+}
+
+const animateRecordedPath = (pathId) => {
+
 }
 
 const addSoundToTrack = (event) => {
@@ -105,7 +109,6 @@ const addSoundToTrack = (event) => {
     TRACKS[selectedPaths[0]].push(record)
     console.log(TRACKS)
 }
-
 
 const stopRecording = () => {
     document.removeEventListener('keypress', addSoundToTrack)
