@@ -8,22 +8,29 @@
 <body>
     <div class="wrapper">
         <nav>
-            <button>ADD NOTE</button>
+            <div>
+                <button id="add-note-btn">ADD NOTE</button>
+                <button id="clear-notes-btn">CLEAR NOTES</button>
+            </div>
+            <div class="search-container">
+                <input id="search-box" type="text" placeholder="search">
+                <button id="search-btn">SEARCH</button>
+            </div>
         </nav>
         <div class="note-container">
-            <div class="note">
+            <div class="note" style="display: none;">
                 <p class="title">note no 1</p>
                 <p class="content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto odit repudiandae tenetur molestias, nesciunt obcaecati distinctio assumenda! Quis possimus ea delectus, ipsum obcaecati nemo vero nihil quia incidunt itaque error.</p>
             </div>
         </div>
-        <div class="add-note-window">
+        <div class="add-note-window" style="display: none;">
             <p class="add-note-title"></p>
             <input type="text">
             <input type="text">
             <input type="text">
         </div>
     </div>
-    <script src="./script.js"></script>
+    <script type="module" src="./script.js"></script>
     <script type="module" src="./note.js"></script>
 </body>
 </html>
