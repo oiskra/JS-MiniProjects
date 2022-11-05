@@ -1,10 +1,11 @@
+
 export default class Note {
     #COLORS = {
-        yellow: 'yellow',
-        blue: 'lightblue',
-        green: 'green'
+        yellow: 'yellow-note',
+        blue: 'blue-note',
+        green: 'green-note',
+        red: 'red-note'
     }
-
 
     constructor({title, content, color}) {
         if(!Object.keys(this.#COLORS).includes(color))
@@ -29,17 +30,15 @@ export default class Note {
 
     createNoteElement() {
         const note = document.createElement('div')
-        const noteTitle = document.createElement('p')
-        const noteContent = document.createElement('p')
-        note.setAttribute('class', 'note')
-        noteTitle.setAttribute('class', 'title') 
-        noteContent.setAttribute('class', 'content') 
-        noteTitle.textContent = this.title
-        noteContent.textContent = this.content
-        note.appendChild(noteTitle)
-        note.appendChild(noteContent)
-
+        const noteColor = this.#COLORS[this.color]
+        note.setAttribute('class', `note ${noteColor}`)
+        note.innerHTML = `
+            <div class="j">
+                <p class="title">${this.title}</p>
+                <img src="./pushpin.png" alt="pin">
+            </div>
+            <p class="content">${this.content}</p>
+        `
         return note
     }
-
 }

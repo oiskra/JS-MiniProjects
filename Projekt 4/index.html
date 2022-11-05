@@ -9,28 +9,39 @@
     <div class="wrapper">
         <nav>
             <div>
-                <button id="add-note-btn">ADD NOTE</button>
-                <button id="clear-notes-btn">CLEAR NOTES</button>
+                <button id="open-note-window-btn">create note</button>
             </div>
             <div class="search-container">
                 <input id="search-box" type="text" placeholder="search">
-                <button id="search-btn">SEARCH</button>
+                <button id="search-btn">search</button>
             </div>
         </nav>
         <div class="note-container">
-            <div class="note" style="display: none;">
-                <p class="title">note no 1</p>
+            <div class="note green-note">
+                <div class="j">
+                    <p class="title">note no 1</p>
+                    <img id="pin" src="./pushpin.png" alt="pin">
+                </div>
                 <p class="content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto odit repudiandae tenetur molestias, nesciunt obcaecati distinctio assumenda! Quis possimus ea delectus, ipsum obcaecati nemo vero nihil quia incidunt itaque error.</p>
             </div>
         </div>
-        <div class="add-note-window" style="display: none;">
-            <p class="add-note-title"></p>
-            <input type="text">
-            <input type="text">
-            <input type="text">
+    </div>
+    <div class="create-note-window">
+        <p>Create new note</p>
+        <input id="new-note-title" type="text" placeholder="title">
+        <textarea id="new-note-content" name="content" rows="10", cols="20" placeholder="content"></textarea>
+        <select id="new-note-color">
+            <option value="yellow">yellow</option>
+            <option value="blue">blue</option>
+            <option value="green">green</option>
+            <option value="red">red</option>
+        </select>
+        <div>
+            <button id="create-new-note">create</button>
+            <button id="cancel-new-note">cancel</button>
         </div>
     </div>
-    <script type="module" src="./script.js"></script>
+    <script type="module" src="./main.js"></script>
     <script type="module" src="./note.js"></script>
 </body>
 </html>
