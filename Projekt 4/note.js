@@ -7,12 +7,14 @@ export default class Note {
         red: 'red-note'
     }
 
-    constructor({title, content, color}) {
+    constructor({title, content, color, tags}) {
         if(!Object.keys(this.#COLORS).includes(color))
             throw new Error(`Color ${color} is unavailable`)
+        this.type = 'note'
         this.title = title
         this.content = content
         this.color = color
+        this.tags = tags
         this.isPinned = false
         this.createdAt = new Date().toISOString()
     }
@@ -39,6 +41,33 @@ export default class Note {
             </div>
             <p class="content">${this.content}</p>
         `
+        const tags = document.createElement('div')
+        tags.setAttribute('class', 'tag-container')
+
+        this.tags.forEach(el => {
+            const tag = document.createElement('div')
+            tag.setAttribute('class', 'tag')
+            tag.textContent = el
+            tags.appendChild(tag)
+        })
+        
+        note.appendChild(tags)
+
         return note
     }
+
+    // createToDoElement() {
+    //     const note = document.createElement('div')
+    //     const noteColor = this.#COLORS[this.color]
+    //     note.setAttribute('class', `note ${noteColor}`)
+    //     note.innerHTML = `
+    //         <div class="j">
+    //             <p class="title">${this.title}</p>
+    //             <img src="./pushpin.png" alt="pin">
+    //         </div>
+    //     `
+    //     note.appendChild(this.content)
+
+    //     return note
+    // }
 }

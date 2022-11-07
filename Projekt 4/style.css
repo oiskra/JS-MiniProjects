@@ -21,28 +21,42 @@ nav {
     justify-content: space-between;
 }
 
-.note-container {
+.note-container, .tag-container {
     display: flex;
     flex-wrap: wrap;
 }
 
 .title {
     font-size: 1.3em;
-    margin: 10px 5px;
+    margin: 0;
 }
 
 .content {
-    font-size: 1.1em;
+    font-size: 1.2em;
     overflow-wrap: break-word;
+    height: 200px;
 }
 
 .note {
     width: 250px;
-    height: 250px;
+    height: 300px;
     margin: 20px;
     padding: 10px;
     box-shadow: 1px 1px 20px black;
     border-radius: 5px;
+}
+
+.tag-container {
+    padding-top: 5px;
+    border-top: solid 1px black;
+}
+
+.tag {
+    background-color: white;
+    border-radius: 5px;
+    padding: 0 5px;
+    margin: 2px;
+    width: fit-content;
 }
 
 button, input, select, textarea {
@@ -60,24 +74,17 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+#open-note-window-btn:hover,
+#open-todo-window-btn:hover,
+#search-btn:hover {
     box-shadow: 0 0 5px white;
     transform: scale(1.05);
 }
 
-.green-note {
-    background-image: var(--green-gradient);
-}
-.yellow-note {
-    background-image: var(--yellow-gradient);
-
-}
-.blue-note {
-    background-image: var(--blue-gradient);
-}
-.red-note {
-    background-image: var(--red-gradient);
-}
+.green-note {background-image: var(--green-gradient);}
+.yellow-note {background-image: var(--yellow-gradient);}
+.blue-note {background-image: var(--blue-gradient);}
+.red-note {background-image: var(--red-gradient);}
 
 .j {
     display: flex;
@@ -89,32 +96,36 @@ img {
 }
 
 
-/* ADD NOTE WINDOW */
-.create-note-window {
+/* ADD NOTE WINDOWS */
+.create-note-window, .create-todo-window {
     position: absolute;
     top:50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 500px;
-    width: 300px;
+    height: 600px;
+    width: 350px;
     padding: 15px 25px;
     background-color: var(--primary-color);
     border-radius: 20px;
     display: none;
     flex-direction: column;
+    gap: 20px;
     justify-content: space-evenly;
     color:white;
     box-shadow: 0 0 10px black;
 }
 
-.create-note-window p {
+.create-note-window p, .create-todo-window p {
     text-align: center;
     font-size: 1.3em;
+    margin: 2px;
 }
 
 .create-note-window div {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 5px;
 }
 
 .create-note-window * {
@@ -124,3 +135,47 @@ img {
 #new-note-content {
     min-height: 200px;
 }
+
+.create-note-window input[type = date] {
+    border: none;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.create-note-window input[type = date]:disabled {
+    color: darkgray;
+}
+
+.reminder-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/* TODO */
+.todo-list {
+    border: solid 3px white;
+    border-radius: 10px;
+    padding: 0;
+    flex-grow: 1;
+}
+.todo-head { 
+    display: flex;
+    justify-content: space-around;
+    border-bottom: solid 1px white;
+    margin: 0 5px;
+}
+.todo-head  * { border: none;}
+
+.tasks {
+    font-size: 1.2em;
+}
+
+.note ul {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.task-done {
+    text-decoration: line-through;
+}
+

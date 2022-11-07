@@ -10,6 +10,7 @@
         <nav>
             <div>
                 <button id="open-note-window-btn">create note</button>
+                <button id="open-todo-window-btn" disabled>create to-do</button>
             </div>
             <div class="search-container">
                 <input id="search-box" type="text" placeholder="search">
@@ -17,31 +18,58 @@
             </div>
         </nav>
         <div class="note-container">
-            <div class="note green-note">
-                <div class="j">
-                    <p class="title">note no 1</p>
-                    <img id="pin" src="./pushpin.png" alt="pin">
-                </div>
-                <p class="content">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto odit repudiandae tenetur molestias, nesciunt obcaecati distinctio assumenda! Quis possimus ea delectus, ipsum obcaecati nemo vero nihil quia incidunt itaque error.</p>
-            </div>
+            
         </div>
     </div>
     <div class="create-note-window">
         <p>Create new note</p>
         <input id="new-note-title" type="text" placeholder="title">
-        <textarea id="new-note-content" name="content" rows="10", cols="20" placeholder="content"></textarea>
+        <textarea id="new-note-content" name="content" rows="10" cols="20" placeholder="content">
+        </textarea>
         <select id="new-note-color">
             <option value="yellow">yellow</option>
             <option value="blue">blue</option>
             <option value="green">green</option>
             <option value="red">red</option>
         </select>
+        <input id="new-note-tags" type="text" placeholder="tags - separated by comma ex. 'school,math'">
+        <div>
+            <div class="reminder-container">
+                <input id="reminder" type="checkbox" name="reminder">
+                <label for="reminder">reminder</label>
+            </div>
+            <input id="reminder-date" type="date" disabled>
+        </div>
         <div>
             <button id="create-new-note">create</button>
             <button id="cancel-new-note">cancel</button>
         </div>
     </div>
+    <div class="create-todo-window">
+        <p>Create new todo</p>
+        <input id="new-todo-title" type="text" placeholder="title">
+        <div class="todo-list">
+            <div class="todo-head">
+                <input id="new-task" type="text" placeholder="new task">
+                <button id="add-task">add</button>
+            </div>
+            <ul class="tasks">
+            </ul>
+        </div>
+        <select id="new-todo-color">
+            <option value="yellow">yellow</option>
+            <option value="blue">blue</option>
+            <option value="green">green</option>
+            <option value="red">red</option>
+        </select>
+        <div>
+            <button id="create-new-todo">create</button>
+            <button id="cancel-new-todo">cancel</button>
+        </div>
+    </div>
     <script type="module" src="./main.js"></script>
+    <script type="module" src="./newNote.js"></script>
+    <script type="module" src="./newToDo.js"></script>
     <script type="module" src="./note.js"></script>
 </body>
 </html>
