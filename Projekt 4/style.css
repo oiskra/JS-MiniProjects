@@ -26,29 +26,33 @@ nav {
     flex-wrap: wrap;
 }
 
+.note-container {row-gap: 30px;}
+
 .title {
     font-size: 1.3em;
-    margin: 0;
+    margin: 0 10px;
 }
 
 .content {
     font-size: 1.2em;
     overflow-wrap: break-word;
     height: 200px;
+    margin: 10px 10px 0 10px;
 }
 
 .note {
     width: 250px;
     height: 300px;
     margin: 20px;
-    padding: 10px;
+    padding: 10px 0;
     box-shadow: 1px 1px 20px black;
     border-radius: 5px;
 }
 
 .tag-container {
-    padding-top: 5px;
+    padding: 5px 10px;
     border-top: solid 1px black;
+    border-radius: 0 0 10px 10px;
 }
 
 .tag {
@@ -179,3 +183,4 @@ img {
     text-decoration: line-through;
 }
 
+.hide {display: none;}
