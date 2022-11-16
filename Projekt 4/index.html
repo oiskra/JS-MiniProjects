@@ -10,7 +10,7 @@
         <nav>
             <div>
                 <button id="open-note-window-btn">create note</button>
-                <button id="open-todo-window-btn" disabled>create to-do</button>
+                <button id="open-todo-window-btn">create to-do</button>
             </div>
             <div class="search-container">
                 <input id="search-box" type="text" placeholder="search">
@@ -52,7 +52,7 @@
                 <input id="new-task" type="text" placeholder="new task">
                 <button id="add-task">add</button>
             </div>
-            <ul class="tasks">
+            <ul id="new-todo-tasks">
             </ul>
         </div>
         <select id="new-todo-color">
@@ -61,14 +61,32 @@
             <option value="green">green</option>
             <option value="red">red</option>
         </select>
+        <input id="new-todo-tags" type="text" placeholder="tags - separated by comma ex. 'school,math'">
         <div>
             <button id="create-new-todo">create</button>
             <button id="cancel-new-todo">cancel</button>
         </div>
     </div>
+    <template id="to-do-template">
+        <div class="note">
+            <div class="note-header">
+                <p class="title"></p>
+                <img src="./pushpin.png" alt="pin">
+            </div>
+            <ul class="tasks">
+                
+            </ul>
+            <div style="margin:0 5px;">Tags:</div>
+            <div class="tag-container">
+
+            </div>
+        </div>
+    </template>
     <script type="module" src="./main.js"></script>
     <script type="module" src="./newNote.js"></script>
     <script type="module" src="./newToDo.js"></script>
     <script type="module" src="./note.js"></script>
+    <script type="module" src="./toDo.js"></script>
+    <script type="module" src="./noteBase.js"></script>
 </body>
 </html>

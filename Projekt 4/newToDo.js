@@ -1,5 +1,5 @@
 'use strict'
-import Note from "./note.js"
+import ToDo from "./toDo.js" 
 
 const wrapper = document.querySelector('.wrapper')
 const openTodoWindowBtn = document.querySelector('#open-todo-window-btn')
@@ -9,7 +9,7 @@ const createNewTodoBtn = document.querySelector('#create-new-todo')
 const noteContainer = document.querySelector('.note-container')
 
 const addTaskBtn = document.querySelector('#add-task')
-const tasks = document.querySelector('.tasks')
+const tasks = document.querySelector('#new-todo-tasks')
 
 const openNoteWindowBtn = document.querySelector('#open-note-window-btn')
 
@@ -41,24 +41,19 @@ addTaskBtn.addEventListener('click', addingTasks)
 const createNewTodo = () => {
     const title = document.querySelector('#new-todo-title').value
     const color = document.querySelector('#new-todo-color').value
-    const tasks = Array.from(document.querySelector('.tasks').children)
-
-    const content = document.createElement('ul')
-    tasks.forEach(el => {
-        content.appendChild(el)
-    });
-    console.log(tasks)
-    console.log(content)
-
-    const newTodo = new Note({
+    const tagsValue = document.querySelector('#new-todo-tags').value
+    const tags = tagsValue.split(',')
+    const tasksArray = Array.from(document.querySelector('#new-todo-tasks').children)
+    const tasks = tasksArray.map(el => el.textContent)
+    const newTodo = new ToDo({
         title,
-        content,
         color,
-        isToDo: true
+        tags,
+        tasks
     })
 
     newTodo.addNote()
-    noteContainer.appendChild(newTodo.createToDoElement())
+    noteContainer.appendChild(newTodo.createNoteElement())
     closeNewTodoWindow()
 }
 createNewTodoBtn.addEventListener('click', createNewTodo)

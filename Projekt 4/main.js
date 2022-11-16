@@ -1,7 +1,9 @@
 import Note from "./note.js";
+import ToDo from "./toDo.js";
 
 const noteContainer = document.querySelector('.note-container')
-const searchBtn = document.querySelector('#search-btn')
+const searchInput = document.querySelector('#search-box')
+const pinnedContainer = document.querySelector('.pinned-container')
 const NOTES_ELEMENTS = []
 
 const init = () => {
@@ -12,14 +14,29 @@ const init = () => {
     console.log(notesParsed)
     notesParsed
         .map(el => {
-            const {title, content, color, tags, creationDate} = el
-            return new Note({
-                title,
-                content,
-                color,
-                tags,
-                creationDate
-            })
+            if(el.type === 'note') {
+                const {title, content, color, tags, isPinned, creationDate} = el
+                return new Note({
+                    title,
+                    content,
+                    color,
+                    tags,
+                    isPinned,
+                    creationDate
+                })
+            }
+            else {
+                const {title, color, tags, tasks, isPinned, creationDate} = el
+                return new ToDo({
+                    title,
+                    color,
+                    tags,
+                    tasks,
+                    isPinned,
+                    creationDate
+                })
+            }
+
         })
         .map(el => {
             const noteElem = el.createNoteElement()
@@ -27,32 +44,67 @@ const init = () => {
             return noteElem
         })
         .forEach(el => {
-            console.log(el)
+            el.isPinned ? 
+            pinnedContainer.appendChild(el) 
+            :
             noteContainer.appendChild(el)
         }); 
 }
 init()
 
-// const search = () => {
-    
-    // }
-    // searchBtn.addEventListener('click', search)
-    
-const searchInput = document.querySelector('#search-box')
+const createPinEventOnImage = () => {
+    const imgs = Array.from(document.querySelectorAll('img'))
+    imgs.forEach(img => {
+        img.addEventListener('click', () => {
+            const note = img.closest('.note')
+            note.remove()
+
+            if(!note.classList.contains('pinned')) 
+                pinnedContainer.appendChild(note)
+            else 
+                noteContainer.appendChild(note)
+            note.classList.toggle('pinned')
+
+            const noteTitle = getTitleFromNote(note)
+            updatePinnedStatus(noteTitle)
+        })
+    })
+}
+createPinEventOnImage()
+
+const getTitleFromNote = (note) => {
+    const noteChildren = Array.from(note.children)
+    const noteHeaderChildren = Array.from(noteChildren
+        .find(el => el.className === 'note-header')
+        .children)
+    const title = noteHeaderChildren.find(el => el.className === 'title').textContent
+
+    return title
+}
+
+const updatePinnedStatus = (title) => {
+    const noteArr = JSON.parse(localStorage.getItem('notes'))
+    const noteIndex = noteArr.findIndex(note => note.title === title) 
+    noteArr[noteIndex].isPinned = !noteArr[noteIndex].isPinned
+    localStorage.setItem('notes', JSON.stringify(noteArr))
+}
 
 searchInput.addEventListener('input', e => {
     const val = e.target.value.toLowerCase()
     NOTES_ELEMENTS.forEach(note => {
+        const {title, content, color, tags} = note.noteObj
         const isVisible = 
-            note.noteObj.title.toLowerCase().includes(val) ||
-            note.noteObj.content.toLowerCase().includes(val) ||
-            note.noteObj.color.toLowerCase().includes(val) ||
-            note.noteObj.tags.some(tag => tag.includes(val))
-
-
-
+            title.toLowerCase().includes(val) ||
+            content.toLowerCase().includes(val) ||
+            color.toLowerCase().includes(val) ||
+            tags.some(tag => tag.includes(val))
         note.HTMLelement.classList.toggle('hide', !isVisible)
     })
 })
+
+
+
+
+
 
 

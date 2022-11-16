@@ -2,7 +2,6 @@
 
 import Note from "./note.js"
 
-
 const wrapper = document.querySelector('.wrapper')
 const createNoteWindow = document.querySelector('.create-note-window')
 const openNoteWindowBtn = document.querySelector('#open-note-window-btn')

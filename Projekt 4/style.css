@@ -21,7 +21,7 @@ nav {
     justify-content: space-between;
 }
 
-.note-container, .tag-container {
+.note-container, .tag-container, .pinned-container {
     display: flex;
     flex-wrap: wrap;
 }
@@ -33,7 +33,7 @@ nav {
     margin: 0 10px;
 }
 
-.content {
+.content, .tasks {
     font-size: 1.2em;
     overflow-wrap: break-word;
     height: 200px;
@@ -47,6 +47,11 @@ nav {
     padding: 10px 0;
     box-shadow: 1px 1px 20px black;
     border-radius: 5px;
+}
+
+.note-footer {
+    display: flex;
+    justify-content: space-between;
 }
 
 .tag-container {
@@ -90,13 +95,15 @@ button {
 .blue-note {background-image: var(--blue-gradient);}
 .red-note {background-image: var(--red-gradient);}
 
-.j {
+.note-header {
     display: flex;
     justify-content: space-between;
 }
 
 img {
     object-fit: contain;
+    margin: 0 5px;
+    cursor: pointer;
 }
 
 
@@ -172,6 +179,11 @@ img {
 
 .tasks {
     font-size: 1.2em;
+}
+
+.tasks li {
+    cursor: pointer;
+    width: fit-content;
 }
 
 .note ul {
