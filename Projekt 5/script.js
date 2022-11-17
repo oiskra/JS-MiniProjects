@@ -5,47 +5,55 @@ let posX = 0
 let posY = 0
 let speedX = 0
 let speedY = 0
-let alphaMin, alphaMax;
+let gammaMin, gammaMax;
 let betaMax, betaMin; 
-let baseAlpha = undefined
+let baseGamma = undefined
 let baseBeta = undefined
 
 const animateBallMovement = () => {
-    if(posX >= width || posX < 0) speedX = 0
-    if(posY >= height || posY < 0) speedY = 0
+    if(posX <= width && posY >= 0) posX += speedX
+    if(posY <= height && posY >= 0) posY += speedY
     
-    posX += speedX
-    //posY += speedY
     ball.style.left = posX + 'px'
-    //ball.style.top = posY + 'px'
+    ball.style.top = posY + 'px'
+
     requestAnimationFrame(animateBallMovement)
 }
 requestAnimationFrame(animateBallMovement)
 
 
 window.addEventListener('deviceorientation', e => {
-    if(baseAlpha === undefined && baseBeta === undefined) {
-        baseAlpha = e.alpha
+    if(baseGamma === undefined && baseBeta === undefined) {
+        baseGamma = e.gamma
         baseBeta = e.beta
 
-        console.log('baseA',baseAlpha)
-        console.log('baseB',baseBeta)
+        console.log('baseA', baseGamma)
+        console.log('baseB', baseBeta)
 
-        alphaMax = baseAlpha + 90
-        alphaMin = baseAlpha - 90
+        gammaMax = baseGamma + 80 // -50 base: 40 
+        gammaMin = baseGamma - 80 // 130 base: 40
 
-        betaMax = baseBeta + 90
-        betaMin = baseBeta - 90
+        betaMax = baseBeta + 80 //90
+        betaMin = baseBeta - 80 //-90
     }
-    speedX = speedX < 0 ? -5 : 5
-
-    // speedX = e.alpha > alphaMax ? 10 : 5  
-    // speedX = e.alpha < alphaMin ? 10 : 5  
     
-    speedY = e.beta > betaMax ? 10 : e.beta/9  
-    speedY = e.beta < betaMin ? 10 : e.beta/9  
+    speedX = e.gamma >= gammaMax ? 
+        10 : e.gamma <= gammaMin ? 
+        -10 : ((baseGamma - e.gamma)/9) * (-1)  
+        
+    speedY = e.beta >= betaMax ? 
+        10 : e.beta <= betaMin ? 
+        -10 : ((baseBeta - e.beta)/9) * (-1)
+    
+    console.log('X',{
+        speedX,
+        posX,
+        gamma: e.gamma,
 
-    console.log('xspeed',speedX)
-    console.log('yspeed',speedY)
-
+    })
+    console.log('Y',{
+        speedY,
+        posY,
+        beta: e.beta
+    })
 })
