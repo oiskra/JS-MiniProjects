@@ -1,4 +1,5 @@
 const ball = document.querySelector('#ball')
+const hole = document.querySelector('#hole')
 const width = window.innerWidth - 100;
 const height = window.innerHeight - 100
 let posX = 0
@@ -10,12 +11,25 @@ let betaMax, betaMin;
 let baseGamma = undefined
 let baseBeta = undefined
 
+const checkCollision = (p1x, p1y, r1, p2x, p2y, r2) => {
+    const a = (p1x - p2x) ** 2
+    const b = (p1y - p2y) ** 2
+    const c = ((r1 + r2) - 100) ** 2 
+    const isColliding = c > a + b
+
+    return isColliding
+}
+
 const animateBallMovement = () => {
-    if(posX <= width && posY >= 0) posX += speedX
-    if(posY <= height && posY >= 0) posY += speedY
+    // if(posX < width && posY > 0) posX += speedX
+    // if(posY < height && posY > 0) posY += speedY
     
+    posX += speedX
+    posY += speedY
     ball.style.left = posX + 'px'
     ball.style.top = posY + 'px'
+
+    console.log('collision', checkCollision(575, 375, 75, posX+50, posY+50, 50))
 
     requestAnimationFrame(animateBallMovement)
 }
@@ -27,14 +41,11 @@ window.addEventListener('deviceorientation', e => {
         baseGamma = e.gamma
         baseBeta = e.beta
 
-        console.log('baseA', baseGamma)
-        console.log('baseB', baseBeta)
+        gammaMax = baseGamma + 80 
+        gammaMin = baseGamma - 80 
 
-        gammaMax = baseGamma + 80 // -50 base: 40 
-        gammaMin = baseGamma - 80 // 130 base: 40
-
-        betaMax = baseBeta + 80 //90
-        betaMin = baseBeta - 80 //-90
+        betaMax = baseBeta + 80 
+        betaMin = baseBeta - 80 
     }
     
     speedX = e.gamma >= gammaMax ? 
@@ -45,15 +56,16 @@ window.addEventListener('deviceorientation', e => {
         10 : e.beta <= betaMin ? 
         -10 : ((baseBeta - e.beta)/9) * (-1)
     
-    console.log('X',{
-        speedX,
-        posX,
-        gamma: e.gamma,
+    // console.log('X',{
+    //     speedX,
+    //     posX,
+    //     gamma: e.gamma,
 
-    })
-    console.log('Y',{
-        speedY,
-        posY,
-        beta: e.beta
-    })
+    // })
+    // console.log('Y',{
+    //     speedY,
+    //     posY,
+    //     beta: e.beta
+    // })
+
 })
