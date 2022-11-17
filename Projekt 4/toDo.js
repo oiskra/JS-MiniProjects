@@ -36,6 +36,7 @@ export default class ToDo extends NoteBase {
             .forEach(el => tasksContainer.appendChild(el))
 
         const tagContainer = toDoNote.querySelector('.tag-container')
+        tagContainer.classList.add(`${this.COLORS[this.color]}`)
         this.tags.forEach(el => {
             const tag = document.createElement('div')
             tag.setAttribute('class', 'tag')
