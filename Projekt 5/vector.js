@@ -26,11 +26,11 @@ export default class Vector {
         return this
     }
 
-    mag() {
+    magnitude() {
         return Math.sqrt(this.x ** 2 + this.y ** 2)
     }
 
-    setMag(num) {
+    setMagnitude(num) {
         return this.normalize().mult(num)
     }
 
@@ -42,7 +42,7 @@ export default class Vector {
     }
 
     normalize() {
-        const len = this.mag()
+        const len = this.magnitude()
 
         if (len !== 0) this.mult((1 / len))
         return this
