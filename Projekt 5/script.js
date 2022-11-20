@@ -1,4 +1,4 @@
-import { generateHoleCoords } from "./gameLogic.js"
+import { generateHoleCoords, animateBallMovement } from "./gameLogic.js"
 
 const startBtn = document.querySelector('#start-btn')
 const wrapper = document.querySelector('.wrapper')
@@ -11,6 +11,7 @@ const start = () => {
     wrapper.style.display = 'block'
     generateHoleCoords()
     calcTimer()
+    requestAnimationFrame(animateBallMovement)
 }
 
 const calcTimer = () =>  {
