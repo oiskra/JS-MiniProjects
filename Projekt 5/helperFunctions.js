@@ -10,6 +10,6 @@ export const map = (value, start1, stop1, start2, stop2, withinBounds = false) =
     }
 }
 
-const constrain = (n, low, high) => {
+export const constrain = (n, low, high) => {
     return Math.max(Math.min(n,high), low)
 }

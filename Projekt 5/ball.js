@@ -2,9 +2,9 @@ import Vector from "./vector.js";
 
 export default class Ball {
     constructor(x, y, m) {
-        this.pos = createVector(x,y)
-        this.vel = p5.Vector.random2D()
-        this.acc = createVector(0,0)
+        this.pos = new Vector(x,y)
+        this.vel = new Vector(0,0)
+        this.acc = new Vector(0,0)
         this.mass = m
     }
 
@@ -35,8 +35,7 @@ export default class Ball {
     }
 
     applyForce(force) {
-        let f = p5.Vector.div(force, this.mass)
-        this.acc.add(f)
-        
+        let f = Vector.divide(force, this.mass)
+        this.acc.add(f)   
     }
 }

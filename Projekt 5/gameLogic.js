@@ -6,6 +6,7 @@ import Blackhole from "./blackHole.js";
 const ball = document.querySelector('#ball')
 const hole = document.querySelector('#hole')
 const blackHoleElement = document.querySelector('.black-hole')
+const info = document.querySelector('#info')
 const width = window.innerWidth - 100;
 const height = window.innerHeight - 100
 let speedX, speedY
@@ -16,8 +17,8 @@ let baseGamma = undefined
 let baseBeta = undefined
 
 
-let ballObj = new Ball(55, 55, 50)
-let blackhole = new Blackhole(350, 150, 50)
+let ballObj = new Ball(5, 5, 300)
+let blackhole = new Blackhole(300, 100, 50)
 
 export const generateHoleCoords = () => {
     const maxPoxX = width - 160
@@ -39,7 +40,15 @@ const checkBallInTheHole = (p1x, p1y, r1, p2x, p2y, r2) => {
 }
 
 export const animateBallMovement = () => {
-
+    info.innerHTML = `
+        x: ${ballObj.pos.x}
+        <br/>
+        y: ${ballObj.pos.y}<br/>
+        vel-x: ${ballObj.vel.x}<br/>
+        vel-y: ${ballObj.vel.y}<br/>
+        acc-x: ${ballObj.acc.x}  <br/>
+        acc-y: ${ballObj.acc.y}  <br/>
+    ` 
     if(checkBallInTheHole(holePosX+75, holePosY+75, 75, ballObj.pos.x+50, ballObj.pos.y+50, 50)){
         newLevel()
     }  

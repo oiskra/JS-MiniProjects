@@ -1,44 +1,33 @@
 
 export default class Vector {
     constructor(x,y) {
-        this.posX = x
-        this.posY = y
+        this.x = x
+        this.y = y
     }
 
     static substract(v1, v2) {
-        v1.sub(v2);
-        return v1
+        let newV = new Vector(v1.x, v1.y)
+        newV.x -= v2.x || 0
+        newV.y -= v2.y || 0
+        return newV
     }
 
-    static divide(v1, num) {
-        //standard division
-        return new Vector(v1.posX / num, v1.posY / num)
+    static divide(v1, n) {
+        let newV = new Vector(v1.x, v1.y)
+        newV.x /= n
+        newV.y /= n
+        return newV
     }
 
     add(v) {
-        this.posX += v.posX
-        this.posY += v.posY
+        this.x += v.x
+        this.y += v.y
 
         return this
     }
 
-    sub(x,y) {
-        if (x instanceof Vector) {
-            this.posX -= x.posX || 0;
-            this.posY -= x.posY || 0;
-            return this;
-        }
-
-        this.posX -= x || 0;
-        this.posY -= y || 0;
-        return this;
-    }
-
     mag() {
-        //a2+b2=c2
-        //from posx & posy
-        //calc c
-        return Math.sqrt(this.posX ** 2 + this.posY ** 2)
+        return Math.sqrt(this.x ** 2 + this.y ** 2)
     }
 
     setMag(num) {
@@ -46,8 +35,8 @@ export default class Vector {
     }
 
     mult(num) {
-        this.posX *= num
-        this.posY *= num
+        this.x *= num
+        this.y *= num
 
         return this
     }
@@ -57,5 +46,10 @@ export default class Vector {
 
         if (len !== 0) this.mult((1 / len))
         return this
+    }
+
+    set(x,y) {
+        this.x = x
+        this.y = y
     }
 }
