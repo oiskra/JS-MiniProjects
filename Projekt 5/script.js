@@ -11,7 +11,7 @@ const start = () => {
     wrapper.style.display = 'block'
     generateHoleCoords()
     calcTimer()
-    requestAnimationFrame(animateBallMovement)
+    //requestAnimationFrame(animateBallMovement)
 }
 
 const calcTimer = () =>  {

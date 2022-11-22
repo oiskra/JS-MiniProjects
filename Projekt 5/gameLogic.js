@@ -11,7 +11,6 @@ const blackHoleElement = document.querySelector('.black-hole')
 const info = document.querySelector('#info')
 const width = window.innerWidth - 100;
 const height = window.innerHeight - 100
-let speedX, speedY
 let holePosX, holePosY
 let gammaMin, gammaMax;
 let betaMax, betaMin; 
@@ -43,18 +42,16 @@ const checkBallInTheHole = (p1x, p1y, r1, p2x, p2y, r2) => {
 
 export const animateBallMovement = () => {
     info.innerHTML = `
-        x: ${ballObj.pos.x}
-        <br/>
+        x: ${ballObj.pos.x}<br/>
         y: ${ballObj.pos.y}<br/>
         vel-x: ${ballObj.vel.x}<br/>
         vel-y: ${ballObj.vel.y}<br/>
-        acc-x: ${ballObj.acc.x}  <br/>
-        acc-y: ${ballObj.acc.y}  <br/>
+        acc-x: ${ballObj.acc.x}<br/>
+        acc-y: ${ballObj.acc.y}<br/>
     ` 
     if(checkBallInTheHole(holePosX+75, holePosY+75, 75, ballObj.pos.x+50, ballObj.pos.y+50, 50)){
         newLevel()
-    }
-    
+    }  
     
     ballObj.update()
     ballObj.edges(width, height)
@@ -65,9 +62,16 @@ export const animateBallMovement = () => {
 
     !checkBallInBlackHole() && requestAnimationFrame(animateBallMovement)
 }
+requestAnimationFrame(animateBallMovement)
 
 const checkBallInBlackHole = () => {
-    let isIn = checkBallInTheHole(blackhole.pos.x + 75, blackhole.pos.y + 75, 75, ballObj.pos.x+50, ballObj.pos.y+50, 50)
+    let isIn = checkBallInTheHole(
+        blackhole.pos.x + 75, 
+        blackhole.pos.y + 75,
+        75, 
+        ballObj.pos.x+50,
+        ballObj.pos.y+50, 
+        50)
 
     if(isIn) {
         ball.style.display = 'none'
@@ -104,7 +108,7 @@ window.addEventListener('deviceorientation', e => {
     // speedX = e.gamma >= gammaMax ? 
     //     10 : e.gamma <= gammaMin ? 
     //     -10 : ((baseGamma - e.gamma)/9) * (-1)  
-    let yacc = map(e.beta, -90, 90, -500, 500)
+    let yacc = map(e.beta, -90, 90, -500, 500, true)
     let yaccV = new Vector(0, yacc)
     ballObj.applyForce(yaccV)
     // speedY = e.beta >= betaMax ? 
