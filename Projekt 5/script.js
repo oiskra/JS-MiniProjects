@@ -22,4 +22,4 @@ const calcTimer = () =>  {
     }, 1)
 }
 
-startBtn.addEventListener('click', start)
+startBtn.addEventListener('mousedown', start)
