@@ -1,7 +1,7 @@
 'use strict'
 
 import Ball from "./ball.js";
-import Blackhole from "./blackHole.js";
+import Blackhole from "./blackhole.js";
 import Vector from "./vector.js";
 import { map } from "./helperFunctions.js";
 
