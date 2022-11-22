@@ -1,4 +1,3 @@
-'use strict'
 
 import Ball from "./ball.js";
 import Blackhole from "./blackhole.js";
