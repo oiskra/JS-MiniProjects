@@ -19,6 +19,13 @@ export default class Vector {
         return newV
     }
 
+    static add(v1, v2) {
+        let newV = new Vector(v1.x, v1.y)
+        newV.x += v2.x || 0
+        newV.y += v2.y || 0
+        return newV
+    }
+
     add(v) {
         this.x += v.x
         this.y += v.y

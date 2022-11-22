@@ -8,6 +8,7 @@ const ball = document.querySelector('#ball')
 const hole = document.querySelector('#hole')
 const blackHoleElement = document.querySelector('.black-hole')
 const info = document.querySelector('#info')
+
 const width = window.innerWidth - 100;
 const height = window.innerHeight - 100
 let holePosX, holePosY
@@ -16,9 +17,9 @@ let betaMax, betaMin;
 let baseGamma = undefined
 let baseBeta = undefined
 
-
-let ballObj = new Ball(5, 5, 300)
+let ballObj = new Ball(5, 5, 50)
 let blackhole = new Blackhole(300, 100, 50)
+
 
 export const generateHoleCoords = () => {
     const maxPoxX = width - 160
@@ -33,7 +34,7 @@ export const generateHoleCoords = () => {
 const checkBallInTheHole = (p1x, p1y, r1, p2x, p2y, r2) => {
     const a = (p1x - p2x) ** 2
     const b = (p1y - p2y) ** 2
-    const c = (r1 + r2 - 100) ** 2 
+    const c = (r1 + r2 - 50) ** 2 
     const isInTheHole = c > a + b
 
     return isInTheHole
@@ -47,8 +48,9 @@ export const animateBallMovement = () => {
         vel-y: ${ballObj.vel.y}<br/>
         acc-x: ${ballObj.acc.x}<br/>
         acc-y: ${ballObj.acc.y}<br/>
+        mag: ${Vector.substract(ballObj.pos, blackhole.pos).magnitude()}<br/>
     ` 
-    if(checkBallInTheHole(holePosX+75, holePosY+75, 75, ballObj.pos.x+50, ballObj.pos.y+50, 50)){
+    if(checkBallInTheHole(holePosX+75, holePosY+75, 75, ballObj.pos.x+25, ballObj.pos.y+25, 25)){
         newLevel()
     }  
     
@@ -61,16 +63,15 @@ export const animateBallMovement = () => {
 
     !checkBallInBlackHole() && requestAnimationFrame(animateBallMovement)
 }
-requestAnimationFrame(animateBallMovement)
 
 const checkBallInBlackHole = () => {
     let isIn = checkBallInTheHole(
         blackhole.pos.x + 75, 
         blackhole.pos.y + 75,
         75, 
-        ballObj.pos.x+50,
-        ballObj.pos.y+50, 
-        50)
+        ballObj.pos.x+25,
+        ballObj.pos.y+25, 
+        25)
 
     if(isIn) {
         ball.style.display = 'none'
@@ -101,21 +102,8 @@ window.addEventListener('deviceorientation', e => {
         betaMax = baseBeta + 80 
         betaMin = baseBeta - 80 
     }
-    let xacc = map(e.gamma, -90, 90, -500, 500, true)
-    let xaccV = new Vector(xacc, 0)
-    ballObj.applyForce(xaccV)
-    // speedX = e.gamma >= gammaMax ? 
-    //     10 : e.gamma <= gammaMin ? 
-    //     -10 : ((baseGamma - e.gamma)/9) * (-1)  
-    let yacc = map(e.beta, -90, 90, -500, 500, true)
-    let yaccV = new Vector(0, yacc)
-    ballObj.applyForce(yaccV)
-    // speedY = e.beta >= betaMax ? 
-    //     10 : e.beta <= betaMin ? 
-    //     -10 : ((baseBeta - e.beta)/9) * (-1)
+    let xvel = map(e.gamma, -90, 90, -10, 10, true)
+    let yvel = map(e.beta, -90, 90, -10, 10, true)
 
-    console.log(xacc)
-    console.log(yacc)
-
-
+    ballObj.vel = new Vector(xvel, yvel)
 })

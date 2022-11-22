@@ -11,15 +11,16 @@ const start = () => {
     wrapper.style.display = 'block'
     generateHoleCoords()
     calcTimer()
-    //requestAnimationFrame(animateBallMovement)
+    requestAnimationFrame(animateBallMovement)
 }
 
 const calcTimer = () =>  {
-    let ms = 0
+    let s = 0
+
     timeInterval = setInterval(() => {
-        ms++
-        timer.textContent = `${Math.floor((ms/100))}:${ms%100}`
-    }, 1)
+        s++
+        timer.textContent = `0:${s%60}`
+    }, 1000)
 }
 
 startBtn.addEventListener('mousedown', start)

@@ -1,4 +1,5 @@
 import Vector from "./vector.js";
+import { constrain } from "./helperFunctions.js";
 
 export default class Ball {
     constructor(x, y, m) {
@@ -9,7 +10,10 @@ export default class Ball {
     }
 
     update() {
-        this.vel.add(this.acc)
+        let newVel = Vector.add(this.vel, this.acc)
+        let velX = constrain(newVel.x, -10, 10)
+        let velY = constrain(newVel.y, -10, 10)
+        this.vel.set(velX, velY)
         this.pos.add(this.vel)
         this.acc.set(0,0)
     }
