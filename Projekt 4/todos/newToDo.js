@@ -1,4 +1,5 @@
 'use strict'
+
 import ToDo from "./toDo.js" 
 
 const wrapper = document.querySelector('.wrapper')

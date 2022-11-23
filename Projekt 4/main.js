@@ -1,5 +1,5 @@
-import Note from "./note.js";
-import ToDo from "./toDo.js";
+import Note from "./notes/note.js";
+import ToDo from "./todos/toDo.js";
 
 const noteContainer = document.querySelector('.note-container')
 const searchInput = document.querySelector('#search-box')
@@ -53,7 +53,7 @@ const init = () => {
 init()
 
 const createPinEventOnImage = () => {
-    const imgs = Array.from(document.querySelectorAll('img'))
+    const imgs = Array.from(document.querySelectorAll('[alt="pin"]'))
     imgs.forEach(img => {
         img.addEventListener('click', () => {
             const note = img.closest('.note')
@@ -71,6 +71,18 @@ const createPinEventOnImage = () => {
     })
 }
 createPinEventOnImage()
+
+const createEditEventOnImage = () => {
+    const imgs = Array.from(document.querySelectorAll('[alt="edit"]'))
+    imgs.forEach(img => {
+        img.addEventListener('click', () => {
+            if(img.hasAttribute('to-do-edit')) {
+                
+            }
+        })
+    })
+
+}
 
 const getTitleFromNote = (note) => {
     const noteChildren = Array.from(note.children)

@@ -33,13 +33,6 @@
         </select>
         <input id="new-note-tags" type="text" placeholder="tags - separated by comma ex. 'school,math'">
         <div>
-            <div class="reminder-container">
-                <input id="reminder" type="checkbox" name="reminder">
-                <label for="reminder">reminder</label>
-            </div>
-            <input id="reminder-date" type="date" disabled>
-        </div>
-        <div>
             <button id="create-new-note">create</button>
             <button id="cancel-new-note">cancel</button>
         </div>
@@ -67,11 +60,20 @@
             <button id="cancel-new-todo">cancel</button>
         </div>
     </div>
+    <div class="edit-todo-window">
+        
+    </div>
+    <div class="edit-note-window">
+
+    </div>
     <template id="to-do-template">
         <div class="note">
             <div class="note-header">
                 <p class="title"></p>
-                <img src="./pushpin.png" alt="pin">
+                <div>                  
+                    <img to-do-edit src="./write.png" alt="edit">
+                    <img src="./pushpin.png" alt="pin">
+                </div>
             </div>
             <ul class="tasks">
                 
@@ -83,10 +85,10 @@
         </div>
     </template>
     <script type="module" src="./main.js"></script>
-    <script type="module" src="./newNote.js"></script>
-    <script type="module" src="./newToDo.js"></script>
-    <script type="module" src="./note.js"></script>
-    <script type="module" src="./toDo.js"></script>
+    <script type="module" src="./notes/newNote.js"></script>
+    <script type="module" src="./todos/newToDo.js"></script>
+    <script type="module" src="./notes/note.js"></script>
+    <script type="module" src="./todos/toDo.js"></script>
     <script type="module" src="./noteBase.js"></script>
 </body>
 </html>

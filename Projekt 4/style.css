@@ -101,9 +101,15 @@ button {
 }
 
 img {
+    transform: scale(0.8);
     object-fit: contain;
-    margin: 0 5px;
+    margin: 0;
     cursor: pointer;
+}
+
+img[alt="pin"] {
+    transform: scale(0.9);
+    margin-right: 5px;
 }
 
 

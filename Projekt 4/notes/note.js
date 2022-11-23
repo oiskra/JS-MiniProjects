@@ -1,4 +1,4 @@
-import NoteBase from "./noteBase.js"
+import NoteBase from "../noteBase.js"
 
 export default class Note extends NoteBase {
 
@@ -27,7 +27,10 @@ export default class Note extends NoteBase {
         note.innerHTML = `
             <div class="note-header">
                 <p class="title">${this.title}</p>
-                <img src="./pushpin.png" alt="pin">
+                <div>
+                    <img note-edit src="./write.png" alt="edit">
+                    <img src="./pushpin.png" alt="pin">
+                </div>
             </div>
             <div class="content">${this.content}</div>
             <div style="margin:0 5px;">Tags:</div>

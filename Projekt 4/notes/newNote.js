@@ -45,18 +45,3 @@ const createNewNote = () => {
 }
 createNewNoteBtn.addEventListener('click', createNewNote)
 
-
-const setReminder = () => {
-    const reminder = document.querySelector('#reminder')
-    const reminderDate = document.querySelector('#reminder-date')
-
-    if(reminder.checked) {
-        reminderDate.disabled = false
-        return
-    }
-
-    reminderDate.disabled = true
-    return
-}
-
-document.querySelector('#reminder').addEventListener('change', setReminder)

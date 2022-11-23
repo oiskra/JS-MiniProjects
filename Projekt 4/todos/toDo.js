@@ -1,4 +1,4 @@
-import NoteBase from "./noteBase.js"
+import NoteBase from "../noteBase.js"
 
 export default class ToDo extends NoteBase {  
 
