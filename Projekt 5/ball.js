@@ -10,10 +10,13 @@ export default class Ball {
     }
 
     update() {
-        let newVel = Vector.add(this.vel, this.acc)
-        let velX = constrain(newVel.x, -10, 10)
-        let velY = constrain(newVel.y, -10, 10)
-        this.vel.set(velX, velY)
+        // let newVel = Vector.add(this.vel, this.acc)
+        // let velX = constrain(newVel.x, -10, 10)
+        // let velY = constrain(newVel.y, -10, 10)
+        // this.vel.set(velX, velY)
+        // this.pos.add(this.vel)
+        // this.acc.set(0,0)
+        this.vel.add(this.acc)
         this.pos.add(this.vel)
         this.acc.set(0,0)
     }
@@ -35,7 +38,6 @@ export default class Ball {
             this.pos.x = w
             this.vel.x *= -1
         }
-
     }
 
     applyForce(force) {

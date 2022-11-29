@@ -37,12 +37,13 @@ const addMultipleAsync = async (...nums) => {
     } else {
         const oddElement = nums.pop()
         const result = await addMultipleAsync(...nums)
+        console.log('oddresult', result)
         return await addAsync(oddElement, result) 
     }    
 }
 
 performance.mark('start')
-const sum = await addMultipleAsync(1,2,3,4,5,6,7,8,9,10)
+const sum = await addMultipleAsync(1,2,3,4,5,6,7,8,9,10,11)
 performance.mark('end')
 const dur = performance.measure('uwu', 'start', 'end')
 

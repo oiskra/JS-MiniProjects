@@ -5,22 +5,27 @@ const wrapper = document.querySelector('.wrapper')
 const timer = document.querySelector('#timer')
 
 let timeInterval
+let ms = 0, s = 0, m = 0
 
 const start = () => {
     startBtn.style.display = 'none'
     wrapper.style.display = 'block'
     generateHoleCoords()
-    calcTimer()
-    requestAnimationFrame(animateBallMovement)
+    //timeInterval = setInterval(calcTimer, 10)
+    animateBallMovement()
 }
 
 const calcTimer = () =>  {
-    let s = 0
-
-    timeInterval = setInterval(() => {
-        s++
-        timer.textContent = `0:${s%60}`
-    }, 1000)
+    timer.textContent = `${m<10?'0'+m:m}:${s<10?'0'+s:s}:${ms<10?'0'+ms:ms}`
+    ms++
+    if(ms == 100) {
+        ms = 0
+        s++;
+    }
+    if(s == 60) {
+        s = 0
+        m++ 
+    }
 }
 
-startBtn.addEventListener('mousedown', start)
+startBtn.addEventListener('click', start)

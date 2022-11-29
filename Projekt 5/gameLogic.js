@@ -1,31 +1,38 @@
 
-import Ball from "./ball.js";
-import Blackhole from "./blackhole.js";
-import Vector from "./vector.js";
-import { map } from "./helperFunctions.js";
+import Ball from "./ball.js"
+import Blackhole from "./blackhole.js"
+import Vector from "./vector.js"
+import Timer from "./timer.js"
+import { map } from "./helperFunctions.js"
 
 const ball = document.querySelector('#ball')
 const hole = document.querySelector('#hole')
 const blackHoleElement = document.querySelector('.black-hole')
 const info = document.querySelector('#info')
 
-const width = window.innerWidth - 100;
-const height = window.innerHeight - 100
+
+const BALL_RADIUS = 25
+const BLACKHOLE_RADIUS = 75
+const WIDTH = window.innerWidth - BALL_RADIUS*2
+const HEIGHT = window.innerHeight - BALL_RADIUS*2
 let holePosX, holePosY
 let gammaMin, gammaMax;
 let betaMax, betaMin; 
 let baseGamma = undefined
 let baseBeta = undefined
+let score = 0
+let activeTime = false
 
-let ballObj = new Ball(5, 5, 50)
-let blackhole = new Blackhole(300, 100, 50)
+let ballObj = new Ball(5, 5, BALL_RADIUS*2)
+let blackhole = new Blackhole(300, 100, 100)
+let timer = new Timer()
 
 
 export const generateHoleCoords = () => {
-    const maxPoxX = width - 160
-    const maxPoxY = height - 160
-    holePosX = Math.random() * ( maxPoxX - 200 ) + 200
-    holePosY = Math.random() * ( maxPoxY - 200 ) + 200
+    const maxPosX = WIDTH - 160
+    const maxPosY = HEIGHT - 160
+    holePosX = Math.random() * ( maxPosX - 200 ) + 200
+    holePosY = Math.random() * ( maxPosY - 200 ) + 200
 
     hole.style.left = holePosX + 'px'
     hole.style.top = holePosY + 'px'
@@ -34,7 +41,7 @@ export const generateHoleCoords = () => {
 const checkBallInTheHole = (p1x, p1y, r1, p2x, p2y, r2) => {
     const a = (p1x - p2x) ** 2
     const b = (p1y - p2y) ** 2
-    const c = (r1 + r2 - 50) ** 2 
+    const c = (r1 + r2 - BALL_RADIUS * 2) ** 2 
     const isInTheHole = c > a + b
 
     return isInTheHole
@@ -49,47 +56,51 @@ export const animateBallMovement = () => {
         acc-x: ${ballObj.acc.x}<br/>
         acc-y: ${ballObj.acc.y}<br/>
         mag: ${Vector.substract(ballObj.pos, blackhole.pos).magnitude()}<br/>
-    ` 
-    if(checkBallInTheHole(holePosX+75, holePosY+75, 75, ballObj.pos.x+25, ballObj.pos.y+25, 25)){
-        newLevel()
+    `     
+    if(!activeTime) {
+        timer.start()
+        activeTime = true
+    }
+
+    if(checkBallInTheHole(
+        holePosX + BLACKHOLE_RADIUS, 
+        holePosY + BLACKHOLE_RADIUS, 
+        BLACKHOLE_RADIUS, 
+        ballObj.pos.x + BALL_RADIUS, 
+        ballObj.pos.y + BALL_RADIUS, 
+        BALL_RADIUS)) {
+        generateHoleCoords()
+        score++
     }  
     
     ballObj.update()
-    ballObj.edges(width, height)
+    ballObj.edges(WIDTH, HEIGHT)
     blackhole.pull(ballObj)
 
     ball.style.left = ballObj.pos.x + 'px'
-    ball.style.top = ballObj.pos.y + 'px'
+    ball.style.top = ballObj.pos.y + 'px';
 
-    !checkBallInBlackHole() && requestAnimationFrame(animateBallMovement)
+    (!checkBallInBlackHole() && score < 10) && requestAnimationFrame(animateBallMovement)
 }
 
 const checkBallInBlackHole = () => {
     let isIn = checkBallInTheHole(
-        blackhole.pos.x + 75, 
-        blackhole.pos.y + 75,
-        75, 
-        ballObj.pos.x+25,
-        ballObj.pos.y+25, 
-        25)
+        blackhole.pos.x + BLACKHOLE_RADIUS, 
+        blackhole.pos.y + BLACKHOLE_RADIUS,
+        BLACKHOLE_RADIUS, 
+        ballObj.pos.x + BALL_RADIUS,
+        ballObj.pos.y + BALL_RADIUS, 
+        BALL_RADIUS)
 
     if(isIn) {
         ball.style.display = 'none'
         alert('consumed by blackhole')
+        timer.stop()
+        activeTime = false
+        console.log(timer.time)
     }
     return isIn
 }
-
-const resetBall = () => {
-    ball.style.left = '5px'
-    ball.style.top = '5px'
-} 
-
-const newLevel = () => {
-    resetBall()
-    generateHoleCoords()
-}
-
 
 window.addEventListener('deviceorientation', e => {
     if(baseGamma === undefined && baseBeta === undefined) {
