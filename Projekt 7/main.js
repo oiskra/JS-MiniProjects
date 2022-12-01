@@ -1,38 +1,39 @@
 import Ball from "./ball.js";
 import { random } from "./helperFunctions.js";
 
-const WIDTH = window.innerWidth;
-const HEIGHT = window.innerHeight;
-const QTY = 50;
+const WIDTH = 1000;
+const HEIGHT = 600;
+const QTY = 20;
 
-const body = document.querySelector('body');
-
-const canvas = document.createElement('canvas')
-canvas.height = HEIGHT;
-canvas.width = WIDTH;
-body.prepend(canvas)
+const startBtn = document.querySelector('#start')
+const resetBtn = document.querySelector('#reset')
+const amountSlider = document.querySelector('#ball-amount')
+const neighbourLineSlider = document.querySelector('#neighbour-line')
+const canvas = document.querySelector('#canvas')
 const ctx = canvas.getContext('2d');
 
-
-const ball = new Ball(50,50,50,ctx);
-const ballArr = [];
+let ballArr = [];
+let animationOn = false; 
 
 const setup = () => {
-    for (let i = 0; i < QTY; i++) {
+    ballArr = []
+    console.log(amountSlider.value)
+    for (let i = 0; i < parseInt(amountSlider.value); i++) {
         const x = random(WIDTH);
         const y = random(HEIGHT);
-        ballArr.push(new Ball(x,y,10,ctx))   
+        ballArr.push(new Ball(i,x,y,5,ctx)) 
+        ballArr[i].neighbourLine = neighbourLineSlider.value;  
     }
+    console.table(ballArr)
 }
-setup();
 
 const draw = () => {
+    animationOn = true;
     ctx.clearRect(0,0, WIDTH, HEIGHT);
     
     for (let i = 0; i < ballArr.length; i++) {
-        const element = ballArr[i];
         for (let j = i; j < ballArr.length; j++) {
-            if(ballArr[i] !== ballArr[j]) {
+            if(ballArr[i].id !== ballArr[j].id) {
                 ballArr[i].connect(ballArr[j])
             }    
         }
@@ -41,10 +42,34 @@ const draw = () => {
         ballArr[i].edges(WIDTH, HEIGHT);
     }
 
-    
-
-    
     requestAnimationFrame(draw);
 }
 
-draw();
+startBtn.addEventListener('click', (e) => {
+    setup();
+    ballArr.forEach(ball => {
+        const vx = random(-1,1);
+        const vy = random(-1,1);
+        ball.velX = vx;
+        ball.velY = vy;
+    });
+    !animationOn && draw();
+    e.target.setAttribute('disabled', null)
+});
+
+resetBtn.addEventListener('click', () => {
+    setup();
+    ballArr.forEach(ball => {
+        const x = random(WIDTH);
+        const y = random(HEIGHT);
+        ball.x = x;
+        ball.y = y;   
+        const vx = random(-1,1);
+        const vy = random(-1,1);
+        ball.velX = vx;
+        ball.velY = vy;  
+    });
+
+    !animationOn && draw();
+});
+

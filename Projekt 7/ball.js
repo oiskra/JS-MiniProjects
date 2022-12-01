@@ -1,12 +1,14 @@
-import { random, map } from "./helperFunctions.js";
+import { map } from "./helperFunctions.js";
 
 export default class Ball {
-    constructor(x,y,r,ctx) {
+    constructor(id,x,y,r,ctx) {
+        this.id = id
         this.x = x;
         this.y = y;
         this.r = r;
-        this.velX = random(-1,1)/4;
-        this.velY = random(-1,1)/4;
+        this.velX = 0;
+        this.velY = 0;
+        this.neighbourLine = 0;
         this.ctx = ctx;
     }
 
@@ -15,8 +17,9 @@ export default class Ball {
         const b = this.y - ball.y;
         const c = Math.sqrt(a**2 + b**2);
 
-        if(c <= 200) {
-            this.ctx.globalAlpha = map(c, 0, 200, 1, 0) 
+        if(c <= this.neighbourLine) {
+            this.ctx.beginPath()
+            this.ctx.globalAlpha = map(c, 0, this.neighbourLine, 1, 0) 
             this.ctx.moveTo(this.x,this.y);
             this.ctx.lineTo(ball.x, ball.y);
             this.ctx.stroke();
