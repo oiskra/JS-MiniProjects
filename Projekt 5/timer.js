@@ -4,6 +4,8 @@ export default class Timer {
         this.s = 0
         this.ms = 0
         this.time = ''
+        this.records = []
+        this.active = false
         this.interval = undefined
         this.timerElement = document.querySelector('#timer')
     }
@@ -21,10 +23,13 @@ export default class Timer {
                 this.m++ 
             }
         }, 10)
+        this.active = true
     }
 
-    stop() {
+    stop(isWin) {
         clearInterval(this.interval)
         this.time = this.timerElement.textContent
+        this.active = false
+        isWin && this.records.push(this.time)
     }
 }

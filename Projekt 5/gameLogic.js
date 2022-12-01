@@ -5,9 +5,11 @@ import Vector from "./vector.js"
 import Timer from "./timer.js"
 import { map } from "./helperFunctions.js"
 
-const ball = document.querySelector('#ball')
+const ballElement = document.querySelector('#ball')
 const hole = document.querySelector('#hole')
 const blackHoleElement = document.querySelector('.black-hole')
+const wrapper = document.querySelector('.wrapper')
+const startBtn = document.querySelector('#start-btn')
 const info = document.querySelector('#info')
 
 
@@ -21,7 +23,6 @@ let betaMax, betaMin;
 let baseGamma = undefined
 let baseBeta = undefined
 let score = 0
-let activeTime = false
 
 let ballObj = new Ball(5, 5, BALL_RADIUS*2)
 let blackhole = new Blackhole(300, 100, 100)
@@ -47,20 +48,41 @@ const checkBallInTheHole = (p1x, p1y, r1, p2x, p2y, r2) => {
     return isInTheHole
 }
 
-export const animateBallMovement = () => {
-    info.innerHTML = `
-        x: ${ballObj.pos.x}<br/>
-        y: ${ballObj.pos.y}<br/>
-        vel-x: ${ballObj.vel.x}<br/>
-        vel-y: ${ballObj.vel.y}<br/>
-        acc-x: ${ballObj.acc.x}<br/>
-        acc-y: ${ballObj.acc.y}<br/>
-        mag: ${Vector.substract(ballObj.pos, blackhole.pos).magnitude()}<br/>
-    `     
-    if(!activeTime) {
-        timer.start()
-        activeTime = true
+const checkGameEnd = (score, isConsumed) => {
+    const win = score === 10
+    if(win || isConsumed) {
+        timer.stop(win)
+        if(win){
+            alert(`
+                YOU WON!
+                Your time: ${timer.time}
+                Records: 
+                ${timer.records}
+            `)
+            wrapper.style.display = 'none'
+            startBtn.style.display = 'block'
+            ballElement.style.display = 'none'
+        }
+
+        if(isConsumed) {
+            alert(`
+                YOU LOST!
+                The black hole consumed you :(
+            `)
+            wrapper.style.display = 'none'
+            startBtn.style.display = 'block'
+            ballElement.style.display = 'none'
+        }
+        return true
     }
+    return false
+}
+
+export const animateBallMovement = () => {
+    if(!timer.active) {
+        timer.start()
+    }
+    const isConsumed = checkBallInBlackHole()
 
     if(checkBallInTheHole(
         holePosX + BLACKHOLE_RADIUS, 
@@ -72,15 +94,15 @@ export const animateBallMovement = () => {
         generateHoleCoords()
         score++
     }  
-    
+
     ballObj.update()
     ballObj.edges(WIDTH, HEIGHT)
     blackhole.pull(ballObj)
 
-    ball.style.left = ballObj.pos.x + 'px'
-    ball.style.top = ballObj.pos.y + 'px';
+    ballElement.style.left = ballObj.pos.x + 'px'
+    ballElement.style.top = ballObj.pos.y + 'px';
 
-    (!checkBallInBlackHole() && score < 10) && requestAnimationFrame(animateBallMovement)
+    !checkGameEnd(score, isConsumed) && requestAnimationFrame(animateBallMovement)
 }
 
 const checkBallInBlackHole = () => {
@@ -93,10 +115,6 @@ const checkBallInBlackHole = () => {
         BALL_RADIUS)
 
     if(isIn) {
-        ball.style.display = 'none'
-        alert('consumed by blackhole')
-        timer.stop()
-        activeTime = false
         console.log(timer.time)
     }
     return isIn
@@ -118,3 +136,15 @@ window.addEventListener('deviceorientation', e => {
 
     ballObj.vel = new Vector(xvel, yvel)
 })
+
+const getStats = () => {
+    info.innerHTML = `
+        x: ${ballObj.pos.x}<br/>
+        y: ${ballObj.pos.y}<br/>
+        vel-x: ${ballObj.vel.x}<br/>
+        vel-y: ${ballObj.vel.y}<br/>
+        acc-x: ${ballObj.acc.x}<br/>
+        acc-y: ${ballObj.acc.y}<br/>
+        mag: ${Vector.substract(ballObj.pos, blackhole.pos).magnitude()}<br/>
+    ` 
+}
