@@ -1,4 +1,4 @@
-import { map } from "./helperFunctions.js";
+import { map, random } from "./helperFunctions.js";
 
 export default class Ball {
     constructor(id,x,y,r,ctx) {
@@ -55,5 +55,15 @@ export default class Ball {
         this.ctx.beginPath();
         this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
         this.ctx.fill();        
+    }
+
+    setRandomVelocity() {
+        this.velX = random(-1,1)
+        this.velY = random(-1,1)
+    }
+
+    setRandomPosition(w,h) {
+        this.x = random(w)
+        this.y = random(h)
     }
 }
