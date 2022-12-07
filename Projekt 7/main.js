@@ -24,10 +24,9 @@ const setup = () => {
     for (let i = 0; i < parseInt(amountSlider.value); i++) {
         const x = random(WIDTH);
         const y = random(HEIGHT);
-        ballArr.push(new Ball(i,x,y,5,ctx)) 
+        ballArr.push(new Ball(i,x,y,random(5,10),ctx)) 
         ballArr[i].neighbourLine = connectingLineSlider.value;  
     }
-
 }
 
 const draw = () => {
@@ -49,7 +48,6 @@ const draw = () => {
     ctx.beginPath();
     ctx.arc(cursorEffect.x, cursorEffect.y, cursorEffect.r, 0, Math.PI*2)
     ctx.stroke()
-
     requestAnimationFrame(draw);
 }
 
@@ -57,6 +55,7 @@ startBtn.addEventListener('click', (e) => {
     setup();
     ballArr.forEach(ball => ball.setRandomVelocity());
     !animationOn && draw();
+    console.table(ballArr)
     e.target.setAttribute('disabled', null)
 });
 

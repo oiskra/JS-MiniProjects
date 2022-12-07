@@ -2,8 +2,12 @@
 export const random = (min, max) => {
     if(!max)
         return Math.random() * min;
-    else
-        return Math.random()*(max-min+1)+min;
+    else{
+      let rnd = Math.random()*(max-min+1)+min;
+      if(rnd > max) rnd = Math.floor(rnd);
+      else if(rnd < min) Math.ceil(rnd);
+      return rnd;
+    }
 }
 
 export const map = (value, start1, stop1, start2, stop2, withinBounds = false) => {
