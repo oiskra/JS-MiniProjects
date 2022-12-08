@@ -1,5 +1,3 @@
-'use strict'
-
 const recBtn = document.querySelector('.record-btn')
 const playBtn = document.querySelector('.play-btn')
 const loopBtn = document.querySelector('.loop-btn')
