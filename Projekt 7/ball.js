@@ -17,19 +17,38 @@ export default class Ball {
         const a = this.x - ball.x;
         const b = this.y - ball.y;
         const c = Math.sqrt(a**2 + b**2);
+
         if(c <= this.neighbourLine) {
             const value = 0.05;
             if(this.m > ball.m) {
                 this.r += value;
                 this.m += 2*value;
+                const newThisVelX = this.velX / (this.m/10)
+                const newThisVelY = this.velY / (this.m/10)
+                this.velX -= newThisVelX
+                this.velY -= newThisVelY
                 ball.r -= value;
                 ball.m -= 2*value;
+                const newBallVelX = ball.velX / (ball.m/10)
+                const newBallVelY = ball.velY / (ball.m/10)
+                ball.velX += newBallVelX
+                ball.velY += newBallVelY
+
                 if(ball.m < 1) deleteCb(ball);
             } else if(ball.m > this.m) {
                 ball.r += value;
                 ball.m += 2*value;
+                const newBallVelX = ball.velX / (ball.m/10)
+                const newBallVelY = ball.velY / (ball.m/10)
+                ball.velX -= newBallVelX
+                ball.velY -= newBallVelY
                 this.r -= value;
                 this.m -= 2*value;
+                const newThisVelX = this.velX / (this.m/10)
+                const newThisVelY = this.velY / (this.m/10)
+                this.velX += newThisVelX
+                this.velY += newThisVelY                
+                
                 if(this.m < 1) deleteCb(this);
             }
         }       
@@ -77,8 +96,10 @@ export default class Ball {
     show() {
         if(this.r < 0.5 ) return;
         this.ctx.beginPath();
+        this.ctx.globalAlpha = 0.2;
         this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-        this.ctx.stroke();        
+        this.ctx.fill();     
+        this.ctx.globalAlpha = 1;
     }
 
     setRandomVelocity() {

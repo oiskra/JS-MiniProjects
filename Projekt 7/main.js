@@ -24,7 +24,7 @@ const setup = () => {
     for (let i = 0; i < parseInt(amountSlider.value); i++) {
         const x = random(WIDTH);
         const y = random(HEIGHT);
-        ballArr.push(new Ball(i,x,y,random(5,10),ctx)) 
+        ballArr.push(new Ball(i,x,y,random(5,15),ctx)) 
         ballArr[i].neighbourLine = connectingLineSlider.value;  
     }
 }
@@ -48,18 +48,14 @@ const draw = () => {
         ballArr[i].edges(WIDTH, HEIGHT);
         pullEffectOn && cursorEffect.pull(ballArr[i]);
     }
-
-    ctx.beginPath();
-    ctx.arc(cursorEffect.x, cursorEffect.y, cursorEffect.r, 0, Math.PI*2)
-    ctx.stroke()
     requestAnimationFrame(draw);
 }
 
 startBtn.addEventListener('click', (e) => {
     setup();
     ballArr.forEach(ball => ball.setRandomVelocity());
-    !animationOn && draw();
     e.target.setAttribute('disabled', null)
+    !animationOn && draw();
 });
 
 resetBtn.addEventListener('click', () => {
