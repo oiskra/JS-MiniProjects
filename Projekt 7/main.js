@@ -37,6 +37,10 @@ const draw = () => {
         for (let j = i; j < ballArr.length; j++) {
             if(ballArr[i].id !== ballArr[j].id) {
                 ballArr[i].connect(ballArr[j])
+                ballArr[i].consume(ballArr[j], (ball) => {
+                    const toDelete = ballArr.find((el) => el.id == ball.id) 
+                    ballArr.splice(ballArr.indexOf(toDelete), 1);
+                })
             }    
         }
         ballArr[i].show();
@@ -55,7 +59,6 @@ startBtn.addEventListener('click', (e) => {
     setup();
     ballArr.forEach(ball => ball.setRandomVelocity());
     !animationOn && draw();
-    console.table(ballArr)
     e.target.setAttribute('disabled', null)
 });
 
@@ -77,7 +80,6 @@ canvas.addEventListener('click', () => {
     ballArr.forEach(ball => {
         cursorEffect.multiplyOnClick(ball, ballArr)
         ball.neighbourLine = connectingLineSlider.value; 
-        console.log(ballArr)
     })
 })
 
