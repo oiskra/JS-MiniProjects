@@ -1,88 +1,91 @@
 
-import Ball from "./ball.js"
-import Blackhole from "./blackhole.js"
-import Vector from "./vector.js"
-import Timer from "./timer.js"
-import { map } from "./helperFunctions.js"
+import Ball from "./ball.js";
+import Blackhole from "./blackhole.js";
+import Vector from "./vector.js";
+import Timer from "./timer.js";
+import { map } from "./helperFunctions.js";
 
-const ballElement = document.querySelector('#ball')
-const hole = document.querySelector('#hole')
-const blackHoleElement = document.querySelector('.black-hole')
-const wrapper = document.querySelector('.wrapper')
-const startBtn = document.querySelector('#start-btn')
-const info = document.querySelector('#info')
+const ballElement = document.querySelector('#ball');
+const hole = document.querySelector('#hole');
+const blackHoleElement = document.querySelector('.black-hole');
+const wrapper = document.querySelector('.wrapper');
+const startBtn = document.querySelector('#start-btn');
+const info = document.querySelector('#info');
 
 
-const BALL_RADIUS = 25
-const BLACKHOLE_RADIUS = 75
-const WIDTH = window.innerWidth - BALL_RADIUS*2
-const HEIGHT = window.innerHeight - BALL_RADIUS*2
-let holePosX, holePosY
+const BALL_RADIUS = 25;
+const BLACKHOLE_RADIUS = 75;
+const WIDTH = window.innerWidth;
+const HEIGHT = window.innerHeight;
+let holePosX, holePosY;
 let gammaMin, gammaMax;
 let betaMax, betaMin; 
-let baseGamma = undefined
-let baseBeta = undefined
-let score = 0
+let baseGamma = undefined;
+let baseBeta = undefined;
+let score = 0;
 
-let ballObj = new Ball(5, 5, BALL_RADIUS*2)
-let blackhole = new Blackhole(300, 100, 100)
-let timer = new Timer()
+let ballObj = new Ball(5, 5, BALL_RADIUS*2);
+let blackhole = new Blackhole(300, 100, 100);
+let timer = new Timer();
 
 
 export const generateHoleCoords = () => {
-    const maxPosX = WIDTH - 160
-    const maxPosY = HEIGHT - 160
-    holePosX = Math.random() * ( maxPosX - 200 ) + 200
-    holePosY = Math.random() * ( maxPosY - 200 ) + 200
+    const maxPosX = WIDTH - 160;
+    const maxPosY = HEIGHT - 160;
+    holePosX = Math.random() * ( maxPosX - 200 ) + 200;
+    holePosY = Math.random() * ( maxPosY - 200 ) + 200;
 
-    hole.style.left = holePosX + 'px'
-    hole.style.top = holePosY + 'px'
+    hole.style.left = holePosX + 'px';
+    hole.style.top = holePosY + 'px';
 }
 
 const checkBallInTheHole = (p1x, p1y, r1, p2x, p2y, r2) => {
-    const a = (p1x - p2x) ** 2
-    const b = (p1y - p2y) ** 2
-    const c = (r1 + r2 - BALL_RADIUS * 2) ** 2 
-    const isInTheHole = c > a + b
-
-    return isInTheHole
+    const a = (p1x - p2x) ** 2;
+    const b = (p1y - p2y) ** 2;
+    const c = (r1 + r2 - BALL_RADIUS * 2) ** 2; 
+    const isInTheHole = c > a + b;
+;
+    return isInTheHole;
 }
 
 const checkGameEnd = (score, isConsumed) => {
-    const win = score === 10
+    const win = score === 2;
     if(win || isConsumed) {
-        timer.stop(win)
+        timer.stop(win);
         if(win){
             alert(`
-                YOU WON!
-                Your time: ${timer.time}
-                Records: 
-                ${timer.records}
-            `)
-            wrapper.style.display = 'none'
-            startBtn.style.display = 'block'
-            ballElement.style.display = 'none'
+YOU WON!
+Your time: ${timer.time}
+Records: ${timer.records.map((x, index)=>`\n${index+1}. ${x}`)}`);
+            resetGame();
         }
 
         if(isConsumed) {
             alert(`
-                YOU LOST!
-                The black hole consumed you :(
-            `)
-            wrapper.style.display = 'none'
-            startBtn.style.display = 'block'
-            ballElement.style.display = 'none'
+YOU LOST!
+The black hole consumed you :(
+            `);
+            resetGame();
         }
-        return true
+        return true;
     }
-    return false
+    return false;
+}
+
+const resetGame = () => {
+    wrapper.style.display = 'none';
+    startBtn.style.display = 'flex';
+    ballElement.style.display = 'none';
+    ballObj.pos.set(5,5);
+    score = 0;
 }
 
 export const animateBallMovement = () => {
     if(!timer.active) {
-        timer.start()
+        timer.start();
+        ballElement.style.display = 'block';
     }
-    const isConsumed = checkBallInBlackHole()
+    const isConsumed = checkBallInBlackHole();
 
     if(checkBallInTheHole(
         holePosX + BLACKHOLE_RADIUS, 
@@ -95,14 +98,19 @@ export const animateBallMovement = () => {
         score++
     }  
 
-    ballObj.update()
-    ballObj.edges(WIDTH, HEIGHT)
-    blackhole.pull(ballObj)
+    ballObj.update();
+    ballObj.edges(WIDTH - 2*BALL_RADIUS, HEIGHT-2*BALL_RADIUS);
+    blackhole.update();
+    blackhole.edges(WIDTH- 2*BLACKHOLE_RADIUS, HEIGHT-2*BLACKHOLE_RADIUS);
+    blackhole.pull(ballObj);
 
-    ballElement.style.left = ballObj.pos.x + 'px'
+    blackHoleElement.style.left = blackhole.pos.x + 'px';
+    blackHoleElement.style.top = blackhole.pos.y + 'px';
+
+    ballElement.style.left = ballObj.pos.x + 'px';
     ballElement.style.top = ballObj.pos.y + 'px';
 
-    !checkGameEnd(score, isConsumed) && requestAnimationFrame(animateBallMovement)
+    !checkGameEnd(score, isConsumed) && requestAnimationFrame(animateBallMovement);
 }
 
 const checkBallInBlackHole = () => {
@@ -112,29 +120,29 @@ const checkBallInBlackHole = () => {
         BLACKHOLE_RADIUS, 
         ballObj.pos.x + BALL_RADIUS,
         ballObj.pos.y + BALL_RADIUS, 
-        BALL_RADIUS)
+        BALL_RADIUS);
 
     if(isIn) {
-        console.log(timer.time)
+        console.log(timer.time);
     }
-    return isIn
+    return isIn;
 }
 
 window.addEventListener('deviceorientation', e => {
     if(baseGamma === undefined && baseBeta === undefined) {
-        baseGamma = e.gamma
-        baseBeta = e.beta
+        baseGamma = e.gamma;
+        baseBeta = e.beta;
 
-        gammaMax = baseGamma + 80 
-        gammaMin = baseGamma - 80 
+        gammaMax = baseGamma + 80; 
+        gammaMin = baseGamma - 80; 
 
-        betaMax = baseBeta + 80 
-        betaMin = baseBeta - 80 
+        betaMax = baseBeta + 80; 
+        betaMin = baseBeta - 80; 
     }
-    let xvel = map(e.gamma, -90, 90, -10, 10, true)
-    let yvel = map(e.beta, -90, 90, -10, 10, true)
+    let xvel = map(e.gamma, -90, 90, -10, 10, true);
+    let yvel = map(e.beta, -90, 90, -10, 10, true);
 
-    ballObj.vel = new Vector(xvel, yvel)
+    ballObj.vel = new Vector(xvel, yvel);
 })
 
 const getStats = () => {
@@ -146,5 +154,5 @@ const getStats = () => {
         acc-x: ${ballObj.acc.x}<br/>
         acc-y: ${ballObj.acc.y}<br/>
         mag: ${Vector.substract(ballObj.pos, blackhole.pos).magnitude()}<br/>
-    ` 
+    `; 
 }

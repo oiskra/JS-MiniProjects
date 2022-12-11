@@ -11,5 +11,5 @@ export const map = (value, start1, stop1, start2, stop2, withinBounds = false) =
 }
 
 export const constrain = (n, low, high) => {
-    return Math.max(Math.min(n,high), low)
+    return Math.max(Math.min(n,high), low);
 }
