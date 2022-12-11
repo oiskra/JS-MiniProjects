@@ -5,22 +5,25 @@ import { random } from "./helperFunctions.js";
 const WIDTH = 1000;
 const HEIGHT = 600;
 
-const startBtn = document.querySelector('#start')
-const resetBtn = document.querySelector('#reset')
-const amountSlider = document.querySelector('#ball-amount')
-const connectingLineSlider = document.querySelector('#connecting-line')
-const pullEffectCheckBox = document.querySelector('#pull-effect')
-const canvas = document.querySelector('#canvas')
+const startBtn = document.querySelector('#start');
+const resetBtn = document.querySelector('#reset');
+const amountSlider = document.querySelector('#ball-amount');
+const connectingLineSlider = document.querySelector('#connecting-line');
+const pullEffectCheckBox = document.querySelector('#pull-effect');
+const agarioModeCheckBox = document.querySelector('#agario-mode');
+const canvas = document.querySelector('#canvas');
 const ctx = canvas.getContext('2d');
 
 let ballArr = [];
 let animationOn = false; 
 let pullEffectOn = pullEffectCheckBox.checked;
+let agarioModeOn = agarioModeCheckBox.checked;
 const cursorEffect = new CursorEffect(75);
 
 const setup = () => {
     ballArr = []
     pullEffectOn = pullEffectCheckBox.checked;
+    agarioModeOn = agarioModeCheckBox.checked;
     for (let i = 0; i < parseInt(amountSlider.value); i++) {
         const x = random(WIDTH);
         const y = random(HEIGHT);
@@ -37,7 +40,7 @@ const draw = () => {
         for (let j = i; j < ballArr.length; j++) {
             if(ballArr[i].id !== ballArr[j].id) {
                 ballArr[i].connect(ballArr[j])
-                ballArr[i].consume(ballArr[j], (ball) => {
+                agarioModeOn && ballArr[i].consume(ballArr[j], (ball) => {
                     const toDelete = ballArr.find((el) => el.id == ball.id) 
                     ballArr.splice(ballArr.indexOf(toDelete), 1);
                 })

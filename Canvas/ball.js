@@ -1,4 +1,4 @@
-import { map, random } from "./helperFunctions.js";
+import { constrain, map, random } from "./helperFunctions.js";
 
 export default class Ball {
     constructor(id,x,y,r,ctx) {
@@ -23,35 +23,21 @@ export default class Ball {
             if(this.m > ball.m) {
                 this.r += value;
                 this.m += 2*value;
-                const newThisVelX = this.velX / (this.m/10)
-                const newThisVelY = this.velY / (this.m/10)
-                this.velX -= newThisVelX
-                this.velY -= newThisVelY
                 ball.r -= value;
                 ball.m -= 2*value;
-                const newBallVelX = ball.velX / (ball.m/10)
-                const newBallVelY = ball.velY / (ball.m/10)
-                ball.velX += newBallVelX
-                ball.velY += newBallVelY
 
                 if(ball.m < 1) deleteCb(ball);
             } else if(ball.m > this.m) {
                 ball.r += value;
                 ball.m += 2*value;
-                const newBallVelX = ball.velX / (ball.m/10)
-                const newBallVelY = ball.velY / (ball.m/10)
-                ball.velX -= newBallVelX
-                ball.velY -= newBallVelY
                 this.r -= value;
                 this.m -= 2*value;
-                const newThisVelX = this.velX / (this.m/10)
-                const newThisVelY = this.velY / (this.m/10)
-                this.velX += newThisVelX
-                this.velY += newThisVelY                
                 
                 if(this.m < 1) deleteCb(this);
             }
-        }       
+        }  
+        this.velX = this.velX > 0 ? map(this.m, 1, 200, 3, 0.1, true) : map(this.m, 1, 200, -3, -0.1, true);
+        this.velY = this.velY > 0 ? map(this.m, 1, 200, 3, 0.1, true) : map(this.m, 1, 200, -3, -0.1, true);     
     }
 
     connect(ball) {
