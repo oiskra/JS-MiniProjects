@@ -7,12 +7,21 @@
 </head>
 <body>
     <div id="wrapper">
-        <div class="weather-card">
-            <div class="current-weather"></div>
-            <div class="forecast-container">
-                
+        <nav>
+            <input id="searchbar" type="text" placeholder="search">
+        </nav>
+        <main>
+            <div class="weather-card">
+                <div class="current-weather">
+                    <div class="city-name">Kraków</div>
+                    <div class="temperature">20°C</div>
+                    <img class="weather-image" src="" alt="">
+                </div>
+                <div class="forecast-container">
+            
+                </div>
             </div>
-        </div>
+        </main>
     </div>
     <script src="main.js"></script>
     <script src="fetcher.js"></script>
