@@ -4,13 +4,13 @@ import Blackhole from "./blackhole.js";
 import Vector from "./vector.js";
 import Timer from "./timer.js";
 import { map } from "./helperFunctions.js";
+import { generateGameOverWindow } from "./script.js";
 
 const ballElement = document.querySelector('#ball');
 const hole = document.querySelector('#hole');
 const blackHoleElement = document.querySelector('.black-hole');
 const wrapper = document.querySelector('.wrapper');
 const startBtn = document.querySelector('#start-btn');
-const info = document.querySelector('#info');
 
 
 const BALL_RADIUS = 25;
@@ -44,29 +44,27 @@ const checkBallInTheHole = (p1x, p1y, r1, p2x, p2y, r2) => {
     const b = (p1y - p2y) ** 2;
     const c = (r1 + r2 - BALL_RADIUS * 2) ** 2; 
     const isInTheHole = c > a + b;
-;
+
     return isInTheHole;
 }
 
 const checkGameEnd = (score, isConsumed) => {
-    const win = score === 2;
+    const win = score === 1;
     if(win || isConsumed) {
         timer.stop(win);
-        if(win){
-            alert(`
-YOU WON!
-Your time: ${timer.time}
-Records: ${timer.records.map((x, index)=>`\n${index+1}. ${x}`)}`);
-            resetGame();
-        }
-
-        if(isConsumed) {
-            alert(`
-YOU LOST!
-The black hole consumed you :(
-            `);
-            resetGame();
-        }
+        new Promise((resolve) => {
+            let gameoverWindow;
+            if(win) 
+                gameoverWindow = generateGameOverWindow(true, timer);
+            else if(isConsumed) 
+                gameoverWindow = generateGameOverWindow(false, timer);
+            
+            wrapper.appendChild(gameoverWindow);        
+            gameoverWindow.querySelector('#ok-btn').addEventListener('click', (e) => {
+                e.target.parentNode.remove();
+                resolve();
+            })
+        }).then(() => resetGame());
         return true;
     }
     return false;
@@ -145,14 +143,3 @@ window.addEventListener('deviceorientation', e => {
     ballObj.vel = new Vector(xvel, yvel);
 })
 
-const getStats = () => {
-    info.innerHTML = `
-        x: ${ballObj.pos.x}<br/>
-        y: ${ballObj.pos.y}<br/>
-        vel-x: ${ballObj.vel.x}<br/>
-        vel-y: ${ballObj.vel.y}<br/>
-        acc-x: ${ballObj.acc.x}<br/>
-        acc-y: ${ballObj.acc.y}<br/>
-        mag: ${Vector.substract(ballObj.pos, blackhole.pos).magnitude()}<br/>
-    `; 
-}
