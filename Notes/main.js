@@ -72,18 +72,6 @@ const createPinEventOnImage = () => {
 }
 createPinEventOnImage()
 
-const createEditEventOnImage = () => {
-    const imgs = Array.from(document.querySelectorAll('[alt="edit"]'))
-    imgs.forEach(img => {
-        img.addEventListener('click', () => {
-            if(img.hasAttribute('to-do-edit')) {
-                
-            }
-        })
-    })
-
-}
-
 const getTitleFromNote = (note) => {
     const noteChildren = Array.from(note.children)
     const noteHeaderChildren = Array.from(noteChildren
@@ -104,13 +92,25 @@ const updatePinnedStatus = (title) => {
 searchInput.addEventListener('input', e => {
     const val = e.target.value.toLowerCase()
     NOTES_ELEMENTS.forEach(note => {
-        const {title, content, color, tags} = note.noteObj
-        const isVisible = 
-            title.toLowerCase().includes(val) ||
-            content.toLowerCase().includes(val) ||
-            color.toLowerCase().includes(val) ||
-            tags.some(tag => tag.includes(val))
-        note.HTMLelement.classList.toggle('hide', !isVisible)
+        const { type } = note.noteObj;
+        if(type === 'note'){
+            const {title, content, color, tags} = note.noteObj
+            const isVisible = 
+                title.toLowerCase().includes(val) ||
+                content.toLowerCase().includes(val) ||
+                color.toLowerCase().includes(val) ||
+                tags.some(tag => tag.includes(val))
+                note.HTMLelement.classList.toggle('hide', !isVisible)
+        }
+        else {
+            const {title, tasks, color, tags} = note.noteObj
+            const isVisible = 
+                title.toLowerCase().includes(val) ||
+                tasks.some(task => task.includes(val)) ||
+                color.toLowerCase().includes(val) ||
+                tags.some(tag => tag.includes(val))
+                note.HTMLelement.classList.toggle('hide', !isVisible)
+        }
     })
 })
 
