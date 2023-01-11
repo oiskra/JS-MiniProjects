@@ -16,17 +16,19 @@
             </datalist>
         </nav>
         <main>
-            <div class="weather">
-                <h1 class="city">Kraków</h2>
-                <h2 class="temp">51°C</h1>
-                <div class="flex">
-                  <img src="https://openweathermap.org/img/wn/04n.png" alt="" class="icon" />
-                  <div class="description">Cloudy</div>
+            <template id="weather-template">
+                <div class="weather">
+                    <h1 class="city">Kraków</h2>
+                    <h2 class="temp">51°C</h1>
+                    <div class="flex">
+                        <img src="https://openweathermap.org/img/wn/04n.png" alt="" class="icon" />
+                        <div class="description">Cloudy</div>
+                    </div>
+                    <div class="feelslike">Feels like: 89&deg;C</div>
+                    <div class="humidity">Humidity: 60%</div>
+                    <div class="wind">Wind speed: 6.2 km/h</div>               
                 </div>
-                <div class="feelslike">Feels like: 89&deg;C</div>
-                <div class="humidity">Humidity: 60%</div>
-                <div class="wind">Wind speed: 6.2 km/h</div>               
-              </div>
+            </template>
         </main>
     </div>
     <script type="module" src="main.js"></script>

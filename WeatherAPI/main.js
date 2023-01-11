@@ -4,7 +4,7 @@ import StorageManager from "./storageManager.js";
 const searchbar = document.querySelector('#searchbar');
 const searchbBtn = document.querySelector('#search-btn')
 const citiesDataList = document.querySelector('#cities');
-const weatherCard = document.querySelector('.weather');
+const weatherTemp = document.querySelector('#weather-template').content;
 const main = document.querySelector('main');
 
 window.onload = () => {
@@ -35,7 +35,7 @@ const addWeatherCard = async (city) => {
     if(!StorageManager.hasAvailableSpace()) return;
 
     const data = await fetchWeather(city);
-    const clone = weatherCard.cloneNode(true);
+    const clone = weatherTemp.cloneNode(true);
     clone.querySelector('.city').textContent = data.name;
     clone.querySelector('.temp').innerHTML = parseInt(data.main.temp) + '&deg;C';
     clone.querySelector('.feelslike').innerHTML = 'Feels like: ' + parseInt(data.main.feels_like) + '&deg;C';
