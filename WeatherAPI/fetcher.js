@@ -1,16 +1,17 @@
-const API_KEY = '5786b43150323446c372fc5c6b4db5ba';
-const CITY_NAME = 'Cracow';
+const API_KEY = 'e90e0b5a70ccd873175190ae64d3431a';
 
-const cities = async () => {
-    const res = await fetch('https://countriesnow.space/api/v0.1/countries');
+export const fetchCities = async () => {
+     const res = await fetch('https://countriesnow.space/api/v0.1/countries/population/cities')
+    .then(x => x.json())
+    .then(x => x.data.map(el =>{
+        const city = el.city.toLowerCase();
+        return city[0].toUpperCase() + city.slice(1);
+    }));
     return res;
 }
 
-const fetchWeather = async() => {
-    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&units=metric&appid=${API_KEY}`);
+export const fetchWeather = async(city) => {
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`)
+    .then(x => x.json());
     return res;
 }
-
-fetchWeather()
-.then(x => x.json())
-.then(x => console.log(x));

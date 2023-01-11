@@ -26,7 +26,7 @@ export const generateGameOverWindow = (isWin, timerObj) => {
         <p>Your time: ${timerObj.time}</p>
         <div>
             <p>Records:</p> 
-            ${timerObj.records.map((x, index)=>{
+            ${timerObj.records.join('').map((x, index)=>{
                 return `<p>${index+1}. ${x}</p>,,,,,,,,,,,,,,,,,,,,`
             })}
         </div>`;

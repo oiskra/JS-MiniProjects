@@ -8,22 +8,29 @@
 <body>
     <div id="wrapper">
         <nav>
-            <input id="searchbar" type="text" placeholder="search">
+            <input list="cities" id="searchbar" type="text" placeholder="search">
+            <button id="search-btn">
+                <img src="./img/searchicon.png" alt="searchicon" search-icon>
+            </button>
+            <datalist id="cities">
+            </datalist>
         </nav>
         <main>
-            <div class="weather-card">
-                <div class="current-weather">
-                    <div class="city-name">Kraków</div>
-                    <div class="temperature">20°C</div>
-                    <img class="weather-image" src="" alt="">
+            <div class="weather">
+                <h1 class="city">Kraków</h2>
+                <h2 class="temp">51°C</h1>
+                <div class="flex">
+                  <img src="https://openweathermap.org/img/wn/04n.png" alt="" class="icon" />
+                  <div class="description">Cloudy</div>
                 </div>
-                <div class="forecast-container">
-            
-                </div>
-            </div>
+                <div class="feelslike">Feels like: 89&deg;C</div>
+                <div class="humidity">Humidity: 60%</div>
+                <div class="wind">Wind speed: 6.2 km/h</div>               
+              </div>
         </main>
     </div>
-    <script src="main.js"></script>
-    <script src="fetcher.js"></script>
+    <script type="module" src="main.js"></script>
+    <script type="module" src="fetcher.js"></script>
+    <script type="module" src="storageManager.js"></script>
 </body>
 </html>
