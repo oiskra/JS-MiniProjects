@@ -1,13 +1,23 @@
 export default class StorageManager {
+
     static hasAvailableSpace() {
         return StorageManager.get().length < 10;
     }
 
-    static set(city) {
+    static set(city) {   
+        if(!StorageManager.hasAvailableSpace()) {
+            return false;
+        }
+
         const cities = JSON.parse(localStorage.getItem('cities'));
-        if(!cities)
+        if(!cities){
             localStorage.setItem('cities', JSON.stringify([city]));
-        else localStorage.setItem('cities', JSON.stringify([...cities, city]));
+            return true;
+        }
+        else {
+            localStorage.setItem('cities', JSON.stringify([...cities, city]));
+            return true;
+        }
     }
 
     static get() {

@@ -6,17 +6,19 @@ const searchbBtn = document.querySelector('#search-btn')
 const citiesDataList = document.querySelector('#cities');
 const weatherTemp = document.querySelector('#weather-template').content;
 const main = document.querySelector('main');
+const body = document.querySelector('body');
+const wrapper = document.querySelector('#wrapper');
 
 window.onload = () => {
     appendCitiesToDatalist();
     loadCitiesFromStorage();
 }
 
-const loadCitiesFromStorage = async () => {
+const loadCitiesFromStorage = () => {
     const cities = StorageManager.get();
 
     for (const city of cities) {
-        await addWeatherCard(city);
+        addWeatherCard(city);
     }
 }
 
@@ -32,9 +34,10 @@ const appendCitiesToDatalist = async () => {
 }
 
 const addWeatherCard = async (city) => {
-    if(!StorageManager.hasAvailableSpace()) return;
-
     const data = await fetchWeather(city);
+    if(data.cod === '404'){
+        throw new Error(data.message);
+    }
     const clone = weatherTemp.cloneNode(true);
     clone.querySelector('.city').textContent = data.name;
     clone.querySelector('.temp').innerHTML = parseInt(data.main.temp) + '&deg;C';
@@ -47,13 +50,29 @@ const addWeatherCard = async (city) => {
     return data.name;
 }
 
+const displayError = (errorMessage) => {
+    const error = document.createElement('div');
+    error.classList.add('error');
+    error.textContent = errorMessage;
+    const btn = document.createElement('button');
+    btn.textContent = 'OK';
+    btn.addEventListener('click', e => {
+        e.target.parentNode.remove();
+        wrapper.classList.remove('blur');
+    })
+    error.appendChild(btn);
+    wrapper.classList.add('blur');
+    body.appendChild(error);
+}
 
 searchbBtn.addEventListener('click', () => {
     const city = searchbar.value;
-    console.log('clicked with' , city);
+    console.log('clicked with' , city); 
+    StorageManager.hasAvailableSpace() ? 
     addWeatherCard(city)
-    .then((city) => StorageManager.set(city))
-    .catch(() => alert('city not found'));
+        .then(city => StorageManager.set(city))
+        .catch(error => displayError(error)) 
+    : displayError('Error: No space in storage');
 })
 
 

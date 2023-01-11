@@ -71,4 +71,24 @@ img[search-icon] {
     text-transform: capitalize;
     margin-left: 8px;
 }
+
+.error {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #D8000C;
+    background-color: #FFBABA;
+    border: 1px solid;
+    margin: 10px 0px;
+    padding: 15px 10px 15px 50px;
+}
+
+.error button {
+    margin-left: 20px;
+}
+
+.blur {
+    filter: blur(1.5rem);
+}
   
