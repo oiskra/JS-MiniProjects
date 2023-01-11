@@ -189,7 +189,7 @@ const deletePath = () => {
     path.remove()
 }
 
-const animateMetronome = () => {
+const turnMetronome = () => {
     const bmp = document.querySelector('#bpm')
     if(!bmp.value) {
         alert('set BMP')
@@ -229,7 +229,7 @@ const loopPath = () => {
 createSelectivePaths();
 
 loopBtn.addEventListener('click', loopPath)
-metronome.addEventListener('click', animateMetronome)
+metronome.addEventListener('click', turnMetronome)
 recBtn.addEventListener('click', startRecording)
 addBtn.addEventListener('click', createNewPath)
 deleteBtn.addEventListener('click', deletePath)
