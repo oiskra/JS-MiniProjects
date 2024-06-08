@@ -40,8 +40,9 @@ const createNewNote = () => {
     })
 
     newNote.addNote()
-    noteContainer.appendChild(newNote.createNoteElement())
+    noteContainer.appendChild(newNote.createNoteElement())    
     closeNewNoteWindow()
+    document.location.reload();
 }
 createNewNoteBtn.addEventListener('click', createNewNote)
 
