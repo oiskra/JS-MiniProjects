@@ -49,7 +49,7 @@ const checkBallInTheHole = (p1x, p1y, r1, p2x, p2y, r2) => {
 }
 
 const checkGameEnd = (score, isConsumed) => {
-    const win = score === 1;
+    const win = score === 5;
     if(win || isConsumed) {
         timer.stop(win);
         new Promise((resolve) => {
