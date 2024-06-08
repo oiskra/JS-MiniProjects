@@ -56,5 +56,6 @@ const createNewTodo = () => {
     newTodo.addNote()
     noteContainer.appendChild(newTodo.createNoteElement())
     closeNewTodoWindow()
+    document.location.reload()
 }
 createNewTodoBtn.addEventListener('click', createNewTodo)
